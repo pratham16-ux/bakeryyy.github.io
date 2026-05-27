@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Stackly Bakery</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="login-style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body class="login-body">
+
+  <!-- page transition overlay (matches rest of site) -->
+  <div class="page-overlay" id="page-overlay"></div>
+
+  <!-- back to site link -->
+  <a href="index.html" class="back-link" id="back-link">
+    <i class="fas fa-arrow-left"></i>
+    <span>Back to Stackly</span>
+  </a>
+
+  <div class="login-wrap" id="login-wrap">
+
+    <!-- ── Left panel — decorative ────────────────────────── -->
+    <div class="login-visual">
+        
+      <div class="login-visual-overlay"></div>
+      <img
+        src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=1200&q=80&fit=crop"
+        alt="Fresh artisan bread"
+        class="login-bg-img"
+      />
+      
+      <div class="login-visual-content">
+        <a href="index.html"><img
+          src="https://snabsolutions.in/wp-content/uploads/2026/02/stackly-snab-solutions.png"
+          alt="Stackly Bakery"
+          class="login-logo"
+        /></a>
+        <p class="login-tagline">Baked with passion<br /><em>since 2003</em></p>
+        <div class="login-badges">
+          <span class="lbadge">🌾 Heritage Grains</span>
+          <span class="lbadge">🌿 Zero Additives</span>
+          <span class="lbadge">🚴 Local Delivery</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Right panel — login form ───────────────────────── -->
+    <div class="login-form-panel" id="login-form-panel">
+
+      <div class="login-form-inner">
+
+        <div class="login-header">
+          <h1 class="login-title">Welcome Back</h1>
+          <p class="login-sub">Sign in to your Stackly account</p>
+        </div>
+
+        <!-- role selector -->
+        <div class="role-selector" id="role-selector">
+          <button class="role-btn active" data-role="customer" id="btn-customer">
+            <span class="role-icon">
+              <i class="fas fa-user"></i>
+            </span>
+            <span class="role-label">Customer</span>
+            <span class="role-desc">Order & track your bread</span>
+          </button>
+          <button class="role-btn" data-role="owner" id="btn-owner">
+            <span class="role-icon">
+              <i class="fas fa-store"></i>
+            </span>
+            <span class="role-label">Owner</span>
+            <span class="role-desc">Manage your bakery</span>
+          </button>
+          <div class="role-slider" id="role-slider"></div>
+        </div>
+
+        <!-- form -->
+        <form class="lform" id="login-form" onsubmit="return false">
+
+          <div class="lfield-group">
+            <div class="lfield">
+              <label for="lf-name">Full Name</label>
+              <div class="lfield-input-wrap">
+                <i class="fas fa-user lfield-icon"></i>
+                <input
+                  type="text"
+                  id="lf-name"
+                  name="name"
+                  placeholder="e.g. Sarah Mitchell"
+                  autocomplete="name"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="lfield">
+              <label for="lf-email">Email Address</label>
+              <div class="lfield-input-wrap">
+                <i class="fas fa-envelope lfield-icon"></i>
+                <input
+                  type="email"
+                  id="lf-email"
+                  name="email"
+                  placeholder="you@example.com"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="lfield">
+              <label for="lf-password">Password</label>
+              <div class="lfield-input-wrap">
+                <i class="fas fa-lock lfield-icon"></i>
+                <input
+                  type="password"
+                  id="lf-password"
+                  name="password"
+                  placeholder="••••••••"
+                  autocomplete="current-password"
+                  required
+                />
+                <button type="button" class="pw-toggle" id="pw-toggle" aria-label="Toggle password">
+                  <i class="fas fa-eye" id="pw-icon"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="lform-meta">
+            <label class="lcheck">
+              <input type="checkbox" id="remember" />
+              <span class="lcheck-box"></span>
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="lforgot">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="lbtn-submit" id="lbtn-submit">
+            <span class="lbtn-text" id="lbtn-text">Sign In as Customer</span>
+            <span class="lbtn-spinner" id="lbtn-spinner"><i class="fas fa-circle-notch fa-spin"></i></span>
+            <span class="lbtn-arrow"><i class="fas fa-arrow-right"></i></span>
+          </button>
+
+          <p class="lform-note">
+            New here?
+            <a href="#" class="lform-note-link">Create a free account</a>
+          </p>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

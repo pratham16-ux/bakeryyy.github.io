@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Stackly Bakery</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ─── Contact Page Unique Styles ─── */
+
+    /* Animated grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Hero Enhancements ── */
+    .contact-hero {
+      position: relative;
+      height: 68vh;
+      min-height: 520px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .contact-hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80&fit=crop&fm=webp');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.08);
+      animation: heroZoom 14s ease-out forwards;
+      opacity: 0.55;
+    }
+
+    @keyframes heroZoom {
+      to { transform: scale(1); }
+    }
+
+    .contact-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(26,14,7,0.92) 0%,
+        rgba(26,14,7,0.5) 40%,
+        rgba(26,14,7,0.2) 100%
+      );
+    }
+
+    .contact-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 3rem 4rem;
+      width: 100%;
+    }
+
+    .contact-hero-label {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+
+    .contact-hero-label::before {
+      content: '';
+      width: 36px;
+      height: 1px;
+      background: var(--caramel);
+    }
+
+    .contact-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s 0.5s forwards;
+    }
+
+    .contact-hero-title em {
+      display: block;
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .contact-hero-breadcrumb {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: rgba(250,246,240,0.4);
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.9s forwards;
+    }
+
+    .contact-hero-breadcrumb a {
+      color: rgba(250,246,240,0.4);
+      transition: color 0.3s;
+    }
+
+    .contact-hero-breadcrumb a:hover { color: var(--caramel); }
+    .contact-hero-breadcrumb .sep { color: rgba(250,246,240,0.2); }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll indicator line on hero */
+    .hero-scroll-line {
+      position: absolute;
+      right: 3rem;
+      bottom: 0;
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, rgba(200,136,74,0), var(--caramel));
+      z-index: 5;
+      animation: lineGrow 1.5s 1s both;
+    }
+
+    @keyframes lineGrow {
+      from { transform: scaleY(0); transform-origin: top; }
+      to { transform: scaleY(1); transform-origin: top; }
+    }
+
+    /* ── Info Strip ── */
+    .info-strip {
+      background: var(--brown);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .info-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .info-strip-item {
+      padding: 3rem 2.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      border-right: 1px solid rgba(250,246,240,0.08);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+
+    .info-strip-item:last-child { border-right: none; }
+
+    .info-strip-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(200,136,74,0.06);
+      transform: translateX(-100%);
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    .info-strip-item:hover::before { transform: translateX(0); }
+
+    .info-strip-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,136,74,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--caramel);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      transition: background 0.4s, border-color 0.4s;
+    }
+
+    .info-strip-item:hover .info-strip-icon {
+      background: var(--caramel);
+      color: var(--cream);
+      border-color: var(--caramel);
+    }
+
+    .info-strip-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-strip-label {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 0.4rem;
+    }
+
+    .info-strip-value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.5;
+    }
+
+    .info-strip-value a {
+      color: var(--cream);
+      transition: color 0.3s;
+    }
+
+    .info-strip-value a:hover { color: var(--caramel); }
+
+    /* ── Main Contact Section ── */
+    .contact-main {
+      padding: 8rem 0;
+      background: var(--cream);
+      position: relative;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 7rem;
+      align-items: start;
+    }
+
+    /* Form side */
+    .contact-form-wrap {
+      position: relative;
+    }
+
+    .contact-form-wrap::before {
+      content: 'WRITE';
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 11rem;
+      font-weight: 700;
+      color: rgba(59,32,18,0.03);
+      line-height: 1;
+      top: -2rem;
+      right: -2rem;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .contact-form {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Custom form groups */
+    .cf-group {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .cf-group label {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 0.6rem;
+    }
+
+    .cf-group input,
+    .cf-group select,
+    .cf-group textarea {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--brown);
+      background: var(--warm);
+      border: 1px solid rgba(59,32,18,0.12);
+      border-bottom: 2px solid rgba(59,32,18,0.15);
+      border-radius: 0;
+      outline: none;
+      transition: border-color 0.35s, background 0.35s, box-shadow 0.35s;
+    }
+
+    .cf-group input:focus,
+    .cf-group select:focus,
+    .cf-group textarea:focus {
+      border-color: rgba(59,32,18,0.08);
+      border-bottom-color: var(--caramel);
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(200,136,74,0.08);
+    }
+
+    .cf-group textarea {
+      resize: vertical;
+      min-height: 150px;
+      line-height: 1.7;
+    }
+
+    .cf-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    /* Animated submit button */
+    .cf-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 2.8rem;
+      background: var(--brown);
+      color: var(--cream);
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.4s;
+      margin-top: 0.5rem;
+    }
+
+    .cf-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--caramel);
+      transform: translateX(-101%);
+      transition: transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    }
+
+    .cf-submit:hover::before { transform: translateX(0); }
+
+    .cf-submit span,
+    .cf-submit i {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cf-submit i {
+      transition: transform 0.4s;
+    }
+
+    .cf-submit:hover i {
+      transform: translateX(6px);
+    }
+
+    /* ── Info / Hours side ── */
+    .contact-info-side {
+      position: sticky;
+      top: 100px;
+    }
+
+    .hours-block {
+      background: var(--dark);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hours-block::before {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,136,74,0.12) 0%, transparent 70%);
+      top: -60px;
+      right: -60px;
+    }
+
+    .hours-block-title {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 1.5rem;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(250,246,240,0.06);
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+
+    .hours-day {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.5);
+    }
+
+    .hours-time {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .hours-row.today .hours-day {
+      color: var(--caramel);
+    }
+
+    .hours-row.today .hours-time {
+      color: var(--gold);
+    }
+
+    .today-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--caramel);
+      margin-right: 0.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    /* Socials block */
+    .social-block {
+      padding: 2.5rem;
+      background: var(--warm);
+      border: 1px solid rgba(59,32,18,0.08);
+    }
+
+    .social-block-title {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 1.5rem;
+    }
+
+    .social-links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .social-link-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.2rem;
+      background: var(--cream);
+      border: 1px solid rgba(59,32,18,0.1);
+      color: var(--brown);
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.35s;
+      text-decoration: none;
+    }
+
+    .social-link-btn i {
+      width: 20px;
+      text-align: center;
+      color: var(--caramel);
+      transition: color 0.3s;
+    }
+
+    .social-link-btn:hover {
+      background: var(--brown);
+      color: var(--cream);
+      border-color: var(--brown);
+    }
+
+    .social-link-btn:hover i { color: var(--gold); }
+
+    /* ── Map Section ── */
+    .map-section {
+      background: var(--warm);
+      padding: 0;
+      position: relative;
+    }
+
+    .map-container {
+      position: relative;
+      height: 480px;
+      overflow: hidden;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated map grid */
+    .map-grid-lines {
+      position: absolute;
+      inset: 0;
+    }
+
+    .map-grid-lines::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,136,74,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,136,74,0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .map-grid-lines::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(26,14,7,0.7) 100%);
+    }
+
+    /* Animated location ping */
+    .map-pin-wrap {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .map-pin {
+      position: relative;
+      width: 60px;
+      height: 60px;
+    }
+
+    .map-pin-inner {
+      width: 60px;
+      height: 60px;
+      border-radius: 50% 50% 50% 0;
+      background: var(--caramel);
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(200,136,74,0.5);
+      animation: pinBounce 2.5s ease-in-out infinite;
+    }
+
+    .map-pin-inner i {
+      transform: rotate(45deg);
+      color: var(--cream);
+      font-size: 1.2rem;
+    }
+
+    @keyframes pinBounce {
+      0%, 100% { transform: rotate(-45deg) translateY(0); }
+      50% { transform: rotate(-45deg) translateY(-8px); }
+    }
+
+    .map-pin-ring {
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(200,136,74,0.4);
+      animation: ringShrink 2.5s ease-in-out infinite;
+    }
+
+    @keyframes ringShrink {
+      0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.4; }
+      50% { transform: translateX(-50%) scale(0.6); opacity: 0.6; }
+    }
+
+    .map-ripple {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid rgba(200,136,74,0.3);
+      animation: rippleOut 2.5s ease-out infinite;
+    }
+
+    .map-ripple:nth-child(2) { animation-delay: 0.8s; }
+    .map-ripple:nth-child(3) { animation-delay: 1.6s; }
+
+    @keyframes rippleOut {
+      0% { width: 60px; height: 60px; opacity: 0.6; }
+      100% { width: 200px; height: 200px; opacity: 0; }
+    }
+
+    .map-address-card {
+      background: rgba(26,14,7,0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(200,136,74,0.25);
+      padding: 1.2rem 2rem;
+      text-align: center;
+    }
+
+    .map-address-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 0.2rem;
+    }
+
+    .map-address-text {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: rgba(250,246,240,0.5);
+    }
+
+    .map-section-text {
+      position: absolute;
+      left: 3rem;
+      bottom: 3rem;
+      z-index: 10;
+    }
+
+    .map-directions-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.8rem;
+      background: var(--caramel);
+      color: var(--cream);
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: background 0.3s, transform 0.3s;
+      text-decoration: none;
+    }
+
+    .map-directions-btn:hover {
+      background: var(--caramel-d);
+      transform: translateY(-2px);
+    }
+
+    /* ── FAQ Accordion ── */
+    .faq-section {
+      background: var(--cream);
+      padding: 8rem 0;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 5rem;
+      margin-top: 4rem;
+      align-items: start;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(59,32,18,0.1);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 0;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--brown);
+      gap: 1rem;
+      transition: color 0.3s;
+    }
+
+    .faq-question:hover { color: var(--caramel); }
+
+    .faq-question.open { color: var(--caramel); }
+
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(59,32,18,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+      color: rgba(59,32,18,0.5);
+      transition: all 0.35s;
+    }
+
+    .faq-question.open .faq-icon {
+      background: var(--caramel);
+      border-color: var(--caramel);
+      color: var(--cream);
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.25,0.46,0.45,0.94), padding 0.4s;
+      font-size: 0.95rem;
+      color: rgba(59,32,18,0.65);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .faq-answer.open {
+      max-height: 200px;
+      padding-bottom: 1.5rem;
+    }
+
+    /* ── Floating elements ── */
+    .contact-deco-num {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 18rem;
+      font-weight: 700;
+      color: rgba(59,32,18,0.025);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ── Success state ── */
+    .cf-success {
+      display: none;
+      padding: 2rem;
+      background: var(--warm);
+      border-left: 3px solid var(--caramel);
+      margin-top: 1.5rem;
+    }
+
+    .cf-success.show { display: block; animation: fadeUp 0.5s forwards; }
+
+    .cf-success-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--brown);
+      margin-bottom: 0.4rem;
+    }
+
+    .cf-success-text {
+      font-size: 0.9rem;
+      color: rgba(59,32,18,0.6);
+      font-weight: 300;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .info-strip-inner {
+        grid-template-columns: 1fr;
+      }
+      .info-strip-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(250,246,240,0.08);
+      }
+      .info-strip-item:last-child { border-bottom: none; }
+      .contact-layout { grid-template-columns: 1fr; gap: 4rem; }
+      .contact-info-side { position: static; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .social-links-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .contact-hero-content { padding: 0 1.5rem 3rem; }
+      .contact-main { padding: 5rem 0; }
+      .cf-row { grid-template-columns: 1fr; }
+      .map-section-text { left: 1.5rem; bottom: 1.5rem; }
+      .social-links-grid { grid-template-columns: 1fr 1fr; }
+      .contact-form-wrap::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page Transition -->
+<div class="page-overlay" id="page-overlay"></div>
+
+<!-- Mobile Menu -->
+<nav class="mobile-menu" id="mobile-menu">
+  <button class="mobile-close" id="mobile-close" aria-label="Close menu">
+    <span class="mobile-close-icon"></span>
+  </button>
+  <a href="index.html">Home</a>
+  <a href="menu.html">Our Menu</a>
+  <a href="shop.html">Shop</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <div class="mobile-menu-order">
+    <a href="login.html" class="mobile-menu-order-btn">Login</a>
+  </div>
+  <div class="mobile-menu-footer">STACKLY BAKERY · EST. 2003</div>
+</nav>
+
+<!-- Navbar -->
+<header class="navbar dark-nav" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img
+      src="https://snabsolutions.in/wp-content/uploads/2026/02/stackly-snab-solutions.png"
+      alt="Stackly Bakery Logo"
+      class="nav-logo-img"
+    />
+    <span class="nav-logo-text"><span></span></span>
+  </a>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="menu.html">Our Menu</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+  <a href="login.html" class="nav-cta">Login</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="contact-hero">
+  <div class="contact-hero-bg"></div>
+  <div class="hero-scroll-line"></div>
+
+  <div class="contact-hero-content">
+    <p class="contact-hero-label">Say Hello · We'd Love to Hear from You</p>
+    <h1 class="contact-hero-title">
+      Get in<br /><em>Touch</em>
+    </h1>
+    <div class="contact-hero-breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">/</span>
+      <span>Contact</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     INFO STRIP
+══════════════════════════════════════════ -->
+<div class="info-strip">
+  <div class="info-strip-inner">
+
+    <div class="info-strip-item reveal">
+      <div class="info-strip-icon">
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+      <div class="info-strip-text">
+        <div class="info-strip-label">Find Us</div>
+        <div class="info-strip-value">14 Mill Lane, London SE1<br />Borough Market Area</div>
+      </div>
+    </div>
+
+    <div class="info-strip-item reveal" data-delay="2">
+      <div class="info-strip-icon">
+        <i class="fas fa-phone"></i>
+      </div>
+      <div class="info-strip-text">
+        <div class="info-strip-label">Call Us</div>
+        <div class="info-strip-value">
+          <a href="tel:+442071234567">+44 207 123 4567</a><br />
+          <a href="mailto:hello@stacklybakery.com">hello@stacklybakery.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-strip-item reveal" data-delay="4">
+      <div class="info-strip-icon">
+        <i class="fas fa-clock"></i>
+      </div>
+      <div class="info-strip-text">
+        <div class="info-strip-label">Opening Hours</div>
+        <div class="info-strip-value">Mon–Fri 7am – 6pm<br />Sat–Sun 8am – 4pm</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CONTACT MAIN
+══════════════════════════════════════════ -->
+<section class="contact-main">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- Form -->
+      <div class="contact-form-wrap reveal-left">
+        <p class="section-label">Send a Message</p>
+        <h2 class="section-title" style="margin-bottom:0.5rem">Let's <em>Chat</em></h2>
+        <p class="section-sub" style="margin-bottom:2.5rem">For orders, events, custom cakes or just a hello — fill in the form and we'll get back to you within one working day.</p>
+
+        <form class="contact-form" id="contact-form">
+
+          <div class="cf-row">
+            <div class="cf-group">
+              <label for="cf-name">Your Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Emma Richardson" required />
+            </div>
+            <div class="cf-group">
+              <label for="cf-email">Email Address</label>
+              <input type="email" id="cf-email" name="email" placeholder="emma@example.com" required />
+            </div>
+          </div>
+
+          <div class="cf-row">
+            <div class="cf-group">
+              <label for="cf-phone">Phone (optional)</label>
+              <input type="tel" id="cf-phone" name="phone" placeholder="+44 7xxx xxxxxx" />
+            </div>
+            <div class="cf-group">
+              <label for="cf-subject">Enquiry Type</label>
+              <select id="cf-subject" name="subject">
+                <option value="">Select one...</option>
+                <option>General Enquiry</option>
+                <option>Custom Cake Order</option>
+                <option>Wedding / Events</option>
+                <option>Catering</option>
+                <option>Wholesale</option>
+                <option>Press / Media</option>
+                <option>Feedback</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="cf-group">
+            <label for="cf-date">Preferred Date (if event-related)</label>
+            <input type="date" id="cf-date" name="date" />
+          </div>
+
+          <div class="cf-group">
+            <label for="cf-message">Your Message</label>
+            <textarea id="cf-message" name="message" placeholder="Tell us a little about what you need — the more detail, the better we can help." required></textarea>
+          </div>
+
+          <button type="submit" class="cf-submit">
+            <span>Send Message</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+
+        </form>
+
+        <div class="cf-success" id="cf-success">
+          <div class="cf-success-title">✓ Message received!</div>
+          <div class="cf-success-text">We'll be in touch within one working day. Thank you for reaching out to Stackly Bakery.</div>
+        </div>
+      </div>
+
+      <!-- Info side -->
+      <div class="contact-info-side reveal-right">
+
+        <!-- Hours -->
+        <div class="hours-block">
+          <div class="hours-block-title">Opening Hours</div>
+
+          <div class="hours-row" id="day-mon">
+            <span class="hours-day">Monday</span>
+            <span class="hours-time">7:00am – 6:00pm</span>
+          </div>
+          <div class="hours-row" id="day-tue">
+            <span class="hours-day">Tuesday</span>
+            <span class="hours-time">7:00am – 6:00pm</span>
+          </div>
+          <div class="hours-row" id="day-wed">
+            <span class="hours-day">Wednesday</span>
+            <span class="hours-time">7:00am – 6:00pm</span>
+          </div>
+          <div class="hours-row" id="day-thu">
+            <span class="hours-day">Thursday</span>
+            <span class="hours-time">7:00am – 6:00pm</span>
+          </div>
+          <div class="hours-row" id="day-fri">
+            <span class="hours-day">Friday</span>
+            <span class="hours-time">7:00am – 6:00pm</span>
+          </div>
+          <div class="hours-row" id="day-sat">
+            <span class="hours-day">Saturday</span>
+            <span class="hours-time">8:00am – 4:00pm</span>
+          </div>
+          <div class="hours-row" id="day-sun">
+            <span class="hours-day">Sunday</span>
+            <span class="hours-time">8:00am – 4:00pm</span>
+          </div>
+
+        </div>
+
+        <!-- Social links -->
+        <div class="social-block">
+          <div class="social-block-title">Follow Our Journey</div>
+          <div class="social-links-grid">
+            <a href="#" class="social-link-btn">
+              <i class="fab fa-instagram"></i>
+              <span>Instagram</span>
+            </a>
+            <a href="#" class="social-link-btn">
+              <i class="fab fa-facebook-f"></i>
+              <span>Facebook</span>
+            </a>
+            <a href="#" class="social-link-btn">
+              <i class="fab fa-tiktok"></i>
+              <span>TikTok</span>
+            </a>
+            <a href="#" class="social-link-btn">
+              <i class="fab fa-pinterest"></i>
+              <span>Pinterest</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     MAP SECTION
+══════════════════════════════════════════ -->
+<section class="map-section">
+  <div class="map-container">
+    <div class="map-placeholder">
+      <div class="map-grid-lines"></div>
+
+      <!-- Ripple rings -->
+      <div class="map-ripple"></div>
+      <div class="map-ripple"></div>
+      <div class="map-ripple"></div>
+
+      <div class="map-pin-wrap">
+        <div class="map-pin">
+          <div class="map-pin-inner">
+            <i class="fas fa-bread-slice"></i>
+          </div>
+          <div class="map-pin-ring"></div>
+        </div>
+        <div class="map-address-card">
+          <div class="map-address-name">Stackly Bakery</div>
+          <div class="map-address-text">14 Mill Lane · London SE1 · Borough Market</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-section-text">
+      <a href="https://maps.google.com" target="_blank" rel="noopener" class="map-directions-btn">
+        <i class="fas fa-directions"></i>
+        Get Directions
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FAQ ACCORDION
+══════════════════════════════════════════ -->
+<section class="faq-section">
+  <div class="container">
+
+    <div class="text-center reveal">
+      <p class="section-label">Quick Answers</p>
+      <h2 class="section-title">Frequently <em>Asked</em></h2>
+      <p class="section-sub">Can't find what you're looking for? Drop us a message above.</p>
+    </div>
+
+    <div class="faq-grid">
+
+      <!-- Column 1 -->
+      <div>
+        <div class="faq-item reveal" data-delay="1">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Do you take custom cake orders?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            Absolutely! We love making celebration cakes. Please get in touch at least two weeks in advance. For large wedding cakes, we recommend reaching out 2–3 months ahead. We'll arrange a tasting session to dial in flavours and design.
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="2">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Can I pre-order my bread for collection?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            Yes! Order via our online shop before 6pm and collect from 7am the next morning. We'll have everything ready and waiting. Pre-orders also guarantee you get the loaves before they sell out — our sourdoughs typically go within an hour of opening.
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="3">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Do you offer catering for events?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            We cater for corporate breakfasts, weddings, private dinners and community events. Our catering menu includes bread and pastry boards, afternoon tea packages, and custom savoury options. Get in touch with your event date and guest count to get a quote.
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="1">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Are your products suitable for vegans?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            Several of our breads are naturally vegan — our sourdoughs, focaccia, rye loaf, and baguettes contain no animal products. We clearly label allergens on all products in-store. Our pastries generally contain butter and eggs, but we can advise on suitable options.
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div>
+        <div class="faq-item reveal" data-delay="2">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Where do you source your ingredients?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            Our flours come from heritage wheat farms within 100km of London, stoneground to order. Butter is sourced from a small Charentes dairy in France. Seasonal fruit and vegetables come from Borough Market suppliers we've known for over a decade. No compromise on quality.
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="3">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Do you offer bread subscriptions?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            We're currently developing a weekly bread subscription service. Sign up to our newsletter to be first in line when we launch — subscribers will receive early access with a founder's discount.
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="1">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Can I buy Stackly bread wholesale?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            We work with a small number of restaurants, delis and cafés in South London. If you're interested in a wholesale partnership, please fill in the contact form above and select 'Wholesale' as the enquiry type. We'll send over our trade information pack.
+          </div>
+        </div>
+
+        <div class="faq-item reveal" data-delay="2">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Do you run baking classes?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            Yes! Weekend sourdough workshops run on the last Saturday of each month. Spaces are strictly limited to 8 people and typically sell out within hours of release. Subscribe to our newsletter to get notified when new dates go live.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     NEWSLETTER
+══════════════════════════════════════════ -->
+<section class="newsletter-section">
+  <div class="newsletter-inner reveal">
+    <p class="section-label" style="justify-content:center; color:var(--caramel)">Stay Connected</p>
+    <h2 class="section-title" style="color:var(--cream)">Never Miss a <em style="color:var(--gold)">Fresh Bake</em></h2>
+    <p class="section-sub">Be first to hear about seasonal specials, baking classes, and new arrivals. Pure flour, zero spam.</p>
+    <form class="newsletter-form" onsubmit="return false">
+      <input type="email" placeholder="Your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <img
+            src="https://snabsolutions.in/wp-content/uploads/2026/02/stackly-snab-solutions.png"
+            alt="Stackly Bakery"
+            class="footer-logo-img"
+            loading="lazy"
+          /></div>
+        <div class="nav-logo"> <span></span> </div>
+        <p>An artisan bakery rooted in tradition, driven by flavour.</p>
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Explore</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Our Menu</a></li>
+          <li><a href="shop.html">Online Shop</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">About</div>
+        <ul class="footer-links">
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="about.html">The Team</a></li>
+          <li><a href="about.html">Awards</a></li>
+          <li><a href="about.html">Values</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Visit Us</div>
+        <ul class="footer-links">
+          <li><a href="#">14 Mill Lane, London SE1</a></li>
+          <li><a href="tel:+442071234567">+44 207 123 4567</a></li>
+          <li><a href="#">Mon–Fri: 7am – 6pm</a></li>
+          <li><a href="#">Sat–Sun: 8am – 4pm</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 <span>stackly</span>. All rights reserved.</p>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  /* ─── FAQ Toggle ─── */
+  function toggleFaq(el) {
+    const answer = el.nextElementSibling;
+    const isOpen = el.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.classList.remove('open');
+      q.nextElementSibling.classList.remove('open');
+    });
+
+    // Open clicked (if it was closed)
+    if (!isOpen) {
+      el.classList.add('open');
+      answer.classList.add('open');
+    }
+  }
+
+  /* ─── Highlight today's hours ─── */
+  const dayMap = {
+    0: 'sun', 1: 'mon', 2: 'tue', 3: 'wed', 4: 'thu', 5: 'fri', 6: 'sat'
+  };
+  const todayId = 'day-' + dayMap[new Date().getDay()];
+  const todayRow = document.getElementById(todayId);
+  if (todayRow) {
+    todayRow.classList.add('today');
+    const daySpan = todayRow.querySelector('.hours-day');
+    const dot = document.createElement('span');
+    dot.className = 'today-dot';
+    daySpan.prepend(dot);
+  }
+
+  /* ─── Contact form with success state ─── */
+  const contactFormEl = document.getElementById('contact-form');
+  const successEl = document.getElementById('cf-success');
+
+  if (contactFormEl) {
+    contactFormEl.addEventListener('submit', function(e) {
+      e.preventDefault();
+      contactFormEl.style.opacity = '0.4';
+      contactFormEl.style.pointerEvents = 'none';
+      setTimeout(() => {
+        contactFormEl.style.display = 'none';
+        successEl.classList.add('show');
+      }, 400);
+    });
+  }
+</script>
+</body>
+</html>
