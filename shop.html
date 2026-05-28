@@ -139,7 +139,7 @@
       font-size: 0.85rem;
     }
     .product-wishlist:hover, .product-wishlist.active {
-      background: var(--rose);
+      background: #e74c3c;
       color: white;
       transform: scale(1.1);
     }
@@ -244,7 +244,7 @@
       white-space: nowrap;
       padding: 0 10px;
       gap: 0;
-      transition: min-width 0.38s var(--ease-out), background 0.25s, transform 0.18s, gap 0.38s, padding 0.38s;
+      transition: min-width 0.38s var(--ease-out, cubic-bezier(0.16,1,0.3,1)), background 0.25s, transform 0.18s, gap 0.38s, padding 0.38s;
       position: relative;
       border: none;
       cursor: pointer;
@@ -254,7 +254,7 @@
       line-height: 1;
       flex-shrink: 0;
       color: var(--cream);
-      transition: transform 0.3s var(--ease-out);
+      transition: transform 0.3s var(--ease-out, cubic-bezier(0.16,1,0.3,1));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -269,7 +269,7 @@
       max-width: 0;
       overflow: hidden;
       opacity: 0;
-      transition: max-width 0.38s var(--ease-out), opacity 0.28s ease, margin-left 0.38s;
+      transition: max-width 0.38s var(--ease-out, cubic-bezier(0.16,1,0.3,1)), opacity 0.28s ease, margin-left 0.38s;
       margin-left: 0;
     }
     .product-add:hover {
@@ -277,24 +277,49 @@
       background: var(--brown);
       padding: 0 14px;
       gap: 6px;
-      transform: none;
     }
-    .product-add:hover .btn-plus {
-      transform: rotate(90deg);
-    }
-    .product-add:hover .btn-label {
-      max-width: 90px;
-      opacity: 1;
-      margin-left: 2px;
-    }
+    .product-add:hover .btn-plus { transform: rotate(90deg); }
+    .product-add:hover .btn-label { max-width: 90px; opacity: 1; margin-left: 2px; }
     .product-add.added {
-      background: var(--sage) !important;
+      background: #5a8a6a !important;
       min-width: 36px !important;
       gap: 0 !important;
       padding: 0 10px !important;
     }
     .product-add.added .btn-plus { transform: none !important; }
     .product-add.added .btn-label { max-width: 0 !important; opacity: 0 !important; }
+
+    /* ── Nav cart icon ── */
+    .nav-cart-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--cream);
+      font-size: 1.15rem;
+      padding: 0.4rem 0.6rem;
+      display: inline-flex;
+      align-items: center;
+      transition: color 0.25s;
+      margin-right: 0.25rem;
+    }
+    .nav-cart-btn:hover { color: var(--gold); }
+    .nav-cart-count {
+      position: absolute;
+      top: -2px; right: -4px;
+      background: var(--caramel);
+      color: var(--cream);
+      font-family: var(--font-ui);
+      font-size: 0.58rem;
+      font-weight: 700;
+      min-width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
 
     /* ── Cart drawer ── */
     .cart-overlay {
@@ -306,7 +331,6 @@
       transition: opacity 0.4s ease;
     }
     .cart-overlay.open { opacity: 1; pointer-events: all; }
-
     .cart-drawer {
       position: fixed; top: 0; right: 0; bottom: 0;
       width: min(420px, 100vw);
@@ -318,7 +342,6 @@
       box-shadow: -12px 0 60px rgba(26,14,7,0.25);
     }
     .cart-drawer.open { transform: translateX(0); }
-
     .cart-drawer-head {
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.6rem 1.8rem 1.2rem;
@@ -345,40 +368,27 @@
       transition: background 0.25s, color 0.25s;
     }
     .cart-close-btn:hover { background: var(--caramel); color: var(--cream); }
-
-    .cart-drawer-body {
-      flex: 1; overflow-y: auto; padding: 1rem 1.8rem;
-    }
+    .cart-drawer-body { flex: 1; overflow-y: auto; padding: 1rem 1.8rem; }
     .cart-drawer-body::-webkit-scrollbar { width: 3px; }
     .cart-drawer-body::-webkit-scrollbar-thumb { background: var(--caramel); border-radius: 3px; }
-
     .cart-empty-state {
       display: flex; flex-direction: column; align-items: center;
       justify-content: center; height: 100%; gap: 1rem;
-      color: rgba(59,32,18,0.38); text-align: center;
-      padding: 3rem 1rem;
+      color: rgba(59,32,18,0.38); text-align: center; padding: 3rem 1rem;
     }
     .cart-empty-state i { font-size: 3rem; color: rgba(200,136,74,0.35); }
     .cart-empty-state p { font-family: var(--font-display); font-size: 1.1rem; color: var(--brown); margin: 0; }
     .cart-empty-state span { font-family: var(--font-ui); font-size: 0.8rem; letter-spacing: 0.05em; }
-
     .cart-item {
       display: flex; align-items: center; gap: 1rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(59,32,18,0.07);
-      animation: cartItemIn 0.35s var(--ease-out);
+      padding: 1rem 0; border-bottom: 1px solid rgba(59,32,18,0.07);
+      animation: cartItemIn 0.35s ease;
     }
     @keyframes cartItemIn { from { opacity:0; transform:translateX(18px); } to { opacity:1; transform:none; } }
-    .cart-item-img {
-      width: 60px; height: 60px; border-radius: 6px; overflow: hidden; flex-shrink: 0;
-    }
+    .cart-item-img { width: 60px; height: 60px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
     .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
     .cart-item-info { flex: 1; min-width: 0; }
-    .cart-item-name {
-      font-family: var(--font-display); font-size: 0.95rem;
-      font-weight: 600; color: var(--brown);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
+    .cart-item-name { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: var(--brown); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .cart-item-price { font-family: var(--font-ui); font-size: 0.82rem; color: var(--caramel); margin-top: 0.15rem; }
     .cart-item-controls { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
     .cart-qty-btn {
@@ -386,39 +396,18 @@
       background: rgba(59,32,18,0.08);
       display: flex; align-items: center; justify-content: center;
       font-size: 0.9rem; color: var(--brown);
-      cursor: pointer; border: none;
-      transition: background 0.2s;
+      cursor: pointer; border: none; transition: background 0.2s;
     }
     .cart-qty-btn:hover { background: var(--caramel); color: var(--cream); }
-    .cart-qty-num {
-      font-family: var(--font-ui); font-size: 0.82rem;
-      font-weight: 500; color: var(--brown); min-width: 18px; text-align: center;
-    }
-    .cart-item-remove {
-      color: rgba(59,32,18,0.28); font-size: 0.78rem;
-      cursor: pointer; border: none; background: none; padding: 0.2rem;
-      transition: color 0.2s;
-    }
-    .cart-item-remove:hover { color: var(--rose); }
-
-    .cart-drawer-footer {
-      padding: 1.2rem 1.8rem 2rem;
-      border-top: 1px solid rgba(59,32,18,0.09);
-      flex-shrink: 0;
-      display: none;
-    }
+    .cart-qty-num { font-family: var(--font-ui); font-size: 0.82rem; font-weight: 500; color: var(--brown); min-width: 18px; text-align: center; }
+    .cart-item-remove { color: rgba(59,32,18,0.28); font-size: 0.78rem; cursor: pointer; border: none; background: none; padding: 0.2rem; transition: color 0.2s; }
+    .cart-item-remove:hover { color: #c0392b; }
+    .cart-drawer-footer { padding: 1.2rem 1.8rem 2rem; border-top: 1px solid rgba(59,32,18,0.09); flex-shrink: 0; display: none; }
     .cart-drawer-footer.visible { display: block; }
-    .cart-subtotal-row {
-      display: flex; justify-content: space-between; align-items: baseline;
-      margin-bottom: 0.4rem;
-    }
+    .cart-subtotal-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; }
     .cart-subtotal-label { font-family: var(--font-ui); font-size: 0.78rem; color: rgba(59,32,18,0.5); letter-spacing: 0.06em; }
     .cart-subtotal-val { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--brown); }
-    .cart-delivery-note {
-      font-family: var(--font-ui); font-size: 0.72rem;
-      color: var(--sage); letter-spacing: 0.04em;
-      margin-bottom: 1.2rem;
-    }
+    .cart-delivery-note { font-family: var(--font-ui); font-size: 0.72rem; color: #5a8a6a; letter-spacing: 0.04em; margin-bottom: 1.2rem; }
     .cart-checkout-btn {
       width: 100%; padding: 1rem; background: var(--brown);
       color: var(--cream); border: none; border-radius: 8px;
@@ -427,46 +416,23 @@
       cursor: pointer; position: relative; overflow: hidden;
       transition: background 0.25s, transform 0.18s;
     }
-    .cart-checkout-btn::before {
-      content: ''; position: absolute; inset: 0;
-      background: var(--caramel); transform: scaleX(0); transform-origin: left;
-      transition: transform 0.38s var(--ease);
-    }
+    .cart-checkout-btn::before { content: ''; position: absolute; inset: 0; background: var(--caramel); transform: scaleX(0); transform-origin: left; transition: transform 0.38s ease; }
     .cart-checkout-btn:hover::before { transform: scaleX(1); }
     .cart-checkout-btn:hover { transform: translateY(-1px); }
     .cart-checkout-btn span { position: relative; z-index: 1; }
-    .cart-view-order {
-      display: block; text-align: center; margin-top: 0.9rem;
-      font-family: var(--font-ui); font-size: 0.74rem;
-      color: var(--caramel); letter-spacing: 0.06em;
-      text-decoration: none; transition: color 0.2s;
-    }
-    .cart-view-order:hover { color: var(--caramel-d); }
-
+    .cart-view-order { display: block; text-align: center; margin-top: 0.9rem; font-family: var(--font-ui); font-size: 0.74rem; color: var(--caramel); letter-spacing: 0.06em; text-decoration: none; transition: color 0.2s; }
+    .cart-view-order:hover { opacity: 0.8; }
 
     /* ── Category filter animations ── */
-    .shop-products-grid {
-      position: relative;
-    }
-    .product-card {
-      transition: opacity 0.35s ease, transform 0.35s ease, max-height 0.35s ease;
-    }
-    .product-card.cat-hidden {
-      display: none;
-    }
-    .product-card.cat-fade-out {
-      opacity: 0;
-      transform: scale(0.94);
-      pointer-events: none;
-    }
-    .product-card.cat-fade-in {
-      animation: catFadeIn 0.38s var(--ease-out) forwards;
-    }
+    .shop-products-grid { position: relative; }
+    .product-card { transition: opacity 0.35s ease, transform 0.35s ease; }
+    .product-card.cat-hidden { display: none; }
+    .product-card.cat-fade-out { opacity: 0; transform: scale(0.94); pointer-events: none; }
+    .product-card.cat-fade-in { animation: catFadeIn 0.38s cubic-bezier(0.16,1,0.3,1) forwards; }
     @keyframes catFadeIn {
       from { opacity: 0; transform: translateY(14px) scale(0.96); }
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
-    /* Active category highlight */
     #category-list li {
       transition: color 0.25s, background 0.25s, padding-left 0.25s;
       border-radius: 4px;
@@ -477,53 +443,23 @@
       background: rgba(200,135,74,0.08);
       padding-left: 0.7rem;
     }
-    #category-list li.active span:first-child {
-      color: var(--caramel);
-    }
-    /* Empty state */
-    .cat-empty-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 4rem 2rem;
-      display: none;
-    }
+    #category-list li.active span:first-child { color: var(--caramel); }
+    .cat-empty-state { grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; display: none; }
     .cat-empty-state.visible { display: block; }
-    .cat-empty-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      opacity: 0.3;
-    }
-    .cat-empty-title {
-      font-family: var(--font-display);
-      font-size: 1.4rem; font-weight: 600; color: var(--brown);
-      margin-bottom: 0.5rem;
-    }
-    .cat-empty-sub {
-      font-family: var(--font-ui);
-      font-size: 0.82rem; color: rgba(59,32,18,0.45);
-      letter-spacing: 0.04em;
-    }
-    /* Animated category label in toolbar */
+    .cat-empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+    .cat-empty-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; color: var(--brown); margin-bottom: 0.5rem; }
+    .cat-empty-sub { font-family: var(--font-ui); font-size: 0.82rem; color: rgba(59,32,18,0.45); letter-spacing: 0.04em; }
     .shop-category-tag {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(200,135,74,0.1);
-      border: 1px solid rgba(200,135,74,0.25);
-      color: var(--caramel);
-      font-family: var(--font-ui); font-size: 0.7rem;
+      background: rgba(200,135,74,0.1); border: 1px solid rgba(200,135,74,0.25);
+      color: var(--caramel); font-family: var(--font-ui); font-size: 0.7rem;
       letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 0.25rem 0.75rem; border-radius: 50px;
-      margin-left: 0.75rem;
-      animation: catTagIn 0.3s var(--ease-out);
+      padding: 0.25rem 0.75rem; border-radius: 50px; margin-left: 0.75rem;
+      animation: catTagIn 0.3s cubic-bezier(0.16,1,0.3,1);
     }
-    .shop-category-tag .cat-tag-x {
-      cursor: pointer; opacity: 0.6; font-size: 0.85rem;
-      transition: opacity 0.2s;
-    }
+    .shop-category-tag .cat-tag-x { cursor: pointer; opacity: 0.6; font-size: 0.85rem; transition: opacity 0.2s; }
     .shop-category-tag .cat-tag-x:hover { opacity: 1; }
-    @keyframes catTagIn {
-      from { opacity: 0; transform: scale(0.88); }
-      to   { opacity: 1; transform: scale(1); }
-    }
+    @keyframes catTagIn { from { opacity: 0; transform: scale(0.88); } to { opacity: 1; transform: scale(1); } }
 
     @media (max-width: 900px) {
       .hamper-banner { grid-template-columns: 1fr; }
@@ -537,6 +473,39 @@
 </head>
 <body>
 
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cart-overlay"></div>
+
+<!-- CART DRAWER -->
+<aside class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-head">
+    <div class="cart-drawer-title">
+      Your Cart
+      <span class="cart-badge" id="cart-badge">0</span>
+    </div>
+    <button class="cart-close-btn" id="cart-close-btn" aria-label="Close cart">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="cart-drawer-body" id="cart-drawer-body">
+    <div class="cart-empty-state" id="cart-empty-state">
+      <i class="fas fa-shopping-basket"></i>
+      <p>Your basket is empty</p>
+      <span>Add something delicious!</span>
+    </div>
+    <div id="cart-items-list"></div>
+  </div>
+  <div class="cart-drawer-footer" id="cart-drawer-footer">
+    <div class="cart-subtotal-row">
+      <span class="cart-subtotal-label">Subtotal</span>
+      <span class="cart-subtotal-val" id="cart-subtotal">£0.00</span>
+    </div>
+    <div class="cart-delivery-note">🚴 Free delivery on orders over £25</div>
+    <button class="cart-checkout-btn"><span>Proceed to Order</span></button>
+    <a href="#" class="cart-view-order">View your full order →</a>
+  </div>
+</aside>
+
 <div class="page-overlay" id="page-overlay"></div>
 
 <nav class="mobile-menu" id="mobile-menu">
@@ -548,10 +517,9 @@
   <a href="shop.html" class="active">Shop</a>
   <a href="about.html">About</a>
   <a href="contact.html">Contact</a>
-    <div class="mobile-menu-order">
+  <div class="mobile-menu-order">
     <a href="login.html" class="mobile-menu-order-btn">Login</a>
   </div>
-  
   <div class="mobile-menu-footer">STACKLY BAKERY · EST. 2003</div>
 </nav>
 
@@ -566,12 +534,16 @@
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
   </nav>
-   <a href="login.html" class="nav-cta">Login</a>
+  <!-- Cart icon -->
+  <button class="nav-cart-btn" id="nav-cart-btn" aria-label="Open cart">
+    <i class="fas fa-shopping-basket"></i>
+    <span class="nav-cart-count" id="cart-count">0</span>
+  </button>
+  <a href="login.html" class="nav-cta">Login</a>
   <button class="hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
 </header>
-
 
 <!-- INNER HERO -->
 <section class="inner-hero">
@@ -618,7 +590,7 @@
         <div class="hamper-banner-label">✦ Perfect Gifting</div>
         <div class="hamper-banner-title">Artisan Gift <em>Hampers</em></div>
         <div class="hamper-banner-desc">Curate the perfect gift from our collection of hand-tied hampers, filled with signature loaves, pastries, preserves and organic coffee. Bespoke options available — just ask.</div>
-        <a href="#hampers" class="btn btn-primary btn-arrow">Explore Hampers</a>
+        <a href="404.html" class="btn btn-primary btn-arrow">Explore Hampers</a>
       </div>
     </div>
   </div>
@@ -634,7 +606,7 @@
         <div class="sidebar-widget">
           <div class="sidebar-title">Categories</div>
           <ul class="sidebar-list" id="category-list">
-            <li class="active" data-category="all" style="cursor:pointer"><span>All Products</span><span class="sidebar-count" id="count-all">9</span></li>
+            <li class="active" data-category="all" style="cursor:pointer"><span>All Products</span><span class="sidebar-count" id="count-all">12</span></li>
             <li data-category="artisan-breads" style="cursor:pointer"><span>Artisan Breads</span><span class="sidebar-count" id="count-artisan-breads">4</span></li>
             <li data-category="pastries" style="cursor:pointer"><span>Pastries</span><span class="sidebar-count" id="count-pastries">2</span></li>
             <li data-category="cakes-tarts" style="cursor:pointer"><span>Cakes &amp; Tarts</span><span class="sidebar-count" id="count-cakes-tarts">2</span></li>
@@ -873,9 +845,6 @@
             </div>
           </div>
 
-        </div>
-
-
           <div class="product-card reveal" data-delay="1" data-category="coffee-drinks">
             <div class="product-img">
               <picture>
@@ -921,7 +890,7 @@
                 <source srcset="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
                 <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500&q=80&fit=crop" alt="Matcha Latte" loading="lazy" />
               </picture>
-              <div class="product-badge" style="background:var(--sage);color:white">Vegan</div>
+              <div class="product-badge" style="background:#5a8a6a;color:white">Vegan</div>
               <button class="product-wishlist" title="Add to wishlist"><i class="far fa-heart"></i></button>
               <button class="product-quick-view">Quick View</button>
             </div>
@@ -941,9 +910,11 @@
             <div class="cat-empty-sub">No products found in this category</div>
           </div>
 
+        </div>
+
         <!-- Load more -->
         <div style="text-align:center;margin-top:3rem">
-          <button class="btn btn-outline-dark">Load More Products</button>
+          <a href="404.html" class="btn btn-primary btn-arrow">Load More Products</a>
         </div>
       </div>
 
@@ -960,7 +931,7 @@
       <p class="section-sub">Subscribe and receive a curated weekly selection of breads and pastries. Cancel or pause any time — no questions asked.</p>
     </div>
     <div class="subscription-grid">
-      <div class="sub-card reveal" data-delay="1" data-category="artisan-breads">
+      <div class="sub-card reveal" data-delay="1">
         <div class="sub-card-icon">🥐</div>
         <div class="sub-card-name">Pastry Box</div>
         <div class="sub-card-price">£18</div>
@@ -971,9 +942,9 @@
           <div class="sub-feature">Seasonal specials</div>
           <div class="sub-feature">Free delivery</div>
         </div>
-        <a href="#" class="btn btn-outline-dark" style="width:100%;justify-content:center">Subscribe</a>
+        <a href="404.html" class="btn btn-outline-dark" style="width:100%;justify-content:center">Subscribe</a>
       </div>
-      <div class="sub-card featured reveal" data-delay="2" data-category="artisan-breads">
+      <div class="sub-card featured reveal" data-delay="2">
         <div class="sub-card-badge">Most Popular</div>
         <div class="sub-card-icon">🍞</div>
         <div class="sub-card-name" style="color:var(--cream)">Baker's Box</div>
@@ -986,7 +957,7 @@
           <div class="sub-feature">Priority early dispatch</div>
           <div class="sub-feature">15% saving vs retail</div>
         </div>
-        <a href="#" class="btn btn-primary" style="width:100%;justify-content:center">Subscribe</a>
+        <a href="404.html" class="btn btn-primary" style="width:100%;justify-content:center">Subscribe</a>
       </div>
       <div class="sub-card reveal" data-delay="3">
         <div class="sub-card-icon">🎁</div>
@@ -999,7 +970,7 @@
           <div class="sub-feature">Artisan coffee included</div>
           <div class="sub-feature">Gift-wrapped, bespoke note</div>
         </div>
-        <a href="#" class="btn btn-outline-dark" style="width:100%;justify-content:center">Subscribe</a>
+        <a href="404.html" class="btn btn-outline-dark" style="width:100%;justify-content:center">Subscribe</a>
       </div>
     </div>
   </div>
@@ -1024,14 +995,14 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo-wrap">
-          <img src="https://snabsolutions.in/wp-content/uploads/2026/02/stackly-snab-solutions.png" alt="Stackly Bakery" class="footer-logo-img" loading="lazy" />
+          <a href="index.html"><img src="https://snabsolutions.in/wp-content/uploads/2026/02/stackly-snab-solutions.png" alt="Stackly Bakery" class="footer-logo-img" loading="lazy" /></a>
         </div>
         <p>An artisan bakery rooted in tradition, driven by flavour. Every loaf, every pastry, every cake — made by hand, with love, every morning since 2003.</p>
         <div class="footer-socials">
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+          <a href="404.html" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="404.html" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="404.html" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="404.html" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
         </div>
       </div>
       <div>
@@ -1047,235 +1018,45 @@
       <div>
         <div class="footer-col-title">Shop</div>
         <ul class="footer-links">
-          <li><a href="#">Artisan Breads</a></li>
-          <li><a href="#">Pastries</a></li>
-          <li><a href="#">Cakes &amp; Tarts</a></li>
-          <li><a href="#">Gift Hampers</a></li>
-          <li><a href="#">Subscriptions</a></li>
+          <li><a href="404.html">Artisan Breads</a></li>
+          <li><a href="404.html">Pastries</a></li>
+          <li><a href="404.html">Cakes &amp; Tarts</a></li>
+          <li><a href="404.html">Gift Hampers</a></li>
+          <li><a href="404.html">Subscriptions</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">Visit Us</div>
         <ul class="footer-links">
-          <li><a href="#">14 Mill Lane, London SE1</a></li>
-          <li><a href="tel:+442071234567">+44 207 123 4567</a></li>
-          <li><a href="mailto:hello@stacklybakery.com">hello@stacklybakery.com</a></li>
-          <li><a href="#">Mon–Fri: 7am – 6pm</a></li>
-          <li><a href="#">Sat–Sun: 8am – 4pm</a></li>
+          <li><a href="404.html">14 Mill Lane, London SE1</a></li>
+          <li><a href="404.html">+44 207 123 4567</a></li>
+          <li><a href="404.html">hello@stacklybakery.com</a></li>
+          <li><a href="404.html">Mon–Fri: 7am – 6pm</a></li>
+          <li><a href="404.html">Sat–Sun: 8am – 4pm</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2026 <span>Stackly Bakery</span>. All rights reserved.</p>
       <div class="footer-legal">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Cookie Settings</a>
+        <a href="404.html">Privacy Policy</a>
+        <a href="404.html">Terms of Use</a>
+        <a href="404.html">Cookie Settings</a>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- CART DRAWER OVERLAY -->
-<div class="cart-overlay" id="cart-overlay"></div>
-
-<!-- CART DRAWER -->
-<aside class="cart-drawer" id="cart-drawer">
-  <div class="cart-drawer-head">
-    <div class="cart-drawer-title">
-      Your Cart
-      <span class="cart-badge" id="cart-badge">0</span>
-    </div>
-    <button class="cart-close-btn" id="cart-close-btn" aria-label="Close cart">
-      <i class="fas fa-times"></i>
-    </button>
-  </div>
-
-  <div class="cart-drawer-body" id="cart-drawer-body">
-    <div class="cart-empty-state" id="cart-empty-state">
-      <i class="fas fa-shopping-basket"></i>
-      <p>Your basket is empty</p>
-      <span>Add something delicious!</span>
-    </div>
-    <div id="cart-items-list"></div>
-  </div>
-
-  <div class="cart-drawer-footer" id="cart-drawer-footer">
-    <div class="cart-subtotal-row">
-      <span class="cart-subtotal-label">Subtotal</span>
-      <span class="cart-subtotal-val" id="cart-subtotal">£0.00</span>
-    </div>
-    <div class="cart-delivery-note">🚴 Free delivery on orders over £25</div>
-   <!-- AFTER -->
-<button class="cart-checkout-btn" onclick="window.location.href='404.html'">
-  <span>Order</span>
-</button>
-    <a href="404.html" class="cart-view-order">View your full order →</a>
-  </div>
-</aside>
-
 <script src="main.js"></script>
+
+<!-- ── Wishlist toggle ── -->
 <script>
-  /* ── Wishlist toggle ── */
-  document.querySelectorAll('.product-wishlist').forEach(btn => {
+  document.querySelectorAll('.product-wishlist').forEach(function(btn) {
     btn.addEventListener('click', function () {
       this.classList.toggle('active');
-      const icon = this.querySelector('i');
+      var icon = this.querySelector('i');
       icon.classList.toggle('far');
       icon.classList.toggle('fas');
-    });
-  });
-
-  /* ══════════════════════════════════════════
-     STACKLY CART SYSTEM
-  ══════════════════════════════════════════ */
-  var cart = [];
-
-  /* ── Helpers ── */
-  function formatPrice(n) {
-    return '£' + n.toFixed(2);
-  }
-
-  function getProductData(btn) {
-    var card  = btn.closest('.product-card');
-    var name  = card.querySelector('.product-name').textContent.trim();
-    var priceStr = card.querySelector('.product-price').textContent.trim().replace('£','');
-    var price = parseFloat(priceStr) || 0;
-    var imgEl = card.querySelector('.product-img img');
-    var img   = imgEl ? imgEl.getAttribute('src') : '';
-    return { name: name, price: price, img: img, qty: 1 };
-  }
-
-  function findItem(name) {
-    return cart.findIndex(function(i){ return i.name === name; });
-  }
-
-  /* ── Update count badge ── */
-  function updateCountBadge() {
-    var total = cart.reduce(function(s,i){ return s + i.qty; }, 0);
-    var countEl  = document.getElementById('cart-count');
-    var badgeEl  = document.getElementById('cart-badge');
-    if (countEl) {
-      countEl.textContent = total;
-      countEl.style.display = total > 0 ? 'flex' : 'none';
-    }
-    if (badgeEl) badgeEl.textContent = total;
-  }
-
-  /* ── Render cart items ── */
-  function renderCart() {
-    var listEl    = document.getElementById('cart-items-list');
-    var emptyEl   = document.getElementById('cart-empty-state');
-    var footerEl  = document.getElementById('cart-drawer-footer');
-    var subtotalEl= document.getElementById('cart-subtotal');
-
-    listEl.innerHTML = '';
-
-    if (cart.length === 0) {
-      emptyEl.style.display = 'flex';
-      footerEl.classList.remove('visible');
-      return;
-    }
-
-    emptyEl.style.display = 'none';
-    footerEl.classList.add('visible');
-
-    var total = 0;
-    cart.forEach(function(item, idx) {
-      total += item.price * item.qty;
-      var div = document.createElement('div');
-      div.className = 'cart-item';
-      div.innerHTML =
-        '<div class="cart-item-img">' +
-          (item.img ? '<img src="' + item.img + '" alt="' + item.name + '" />' : '') +
-        '</div>' +
-        '<div class="cart-item-info">' +
-          '<div class="cart-item-name">' + item.name + '</div>' +
-          '<div class="cart-item-price">' + formatPrice(item.price) + ' each</div>' +
-          '<div class="cart-item-controls">' +
-            '<button class="cart-qty-btn" data-action="dec" data-idx="' + idx + '">−</button>' +
-            '<span class="cart-qty-num">' + item.qty + '</span>' +
-            '<button class="cart-qty-btn" data-action="inc" data-idx="' + idx + '">+</button>' +
-          '</div>' +
-        '</div>' +
-        '<button class="cart-item-remove" data-idx="' + idx + '" title="Remove"><i class="fas fa-trash-alt"></i></button>';
-      listEl.appendChild(div);
-    });
-
-    if (subtotalEl) subtotalEl.textContent = formatPrice(total);
-    updateCountBadge();
-
-    /* qty / remove events */
-    listEl.querySelectorAll('.cart-qty-btn').forEach(function(b){
-      b.addEventListener('click', function(){
-        var i   = parseInt(this.dataset.idx);
-        var act = this.dataset.action;
-        if (act === 'inc') { cart[i].qty += 1; }
-        if (act === 'dec') {
-          cart[i].qty -= 1;
-          if (cart[i].qty <= 0) cart.splice(i, 1);
-        }
-        renderCart();
-      });
-    });
-    listEl.querySelectorAll('.cart-item-remove').forEach(function(b){
-      b.addEventListener('click', function(){
-        var i = parseInt(this.dataset.idx);
-        cart.splice(i, 1);
-        renderCart();
-      });
-    });
-  }
-
-  /* ── Open / close drawer ── */
-  function openCart() {
-    document.getElementById('cart-drawer').classList.add('open');
-    document.getElementById('cart-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeCart() {
-    document.getElementById('cart-drawer').classList.remove('open');
-    document.getElementById('cart-overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  document.getElementById('cart-close-btn').addEventListener('click', closeCart);
-  document.getElementById('cart-overlay').addEventListener('click', closeCart);
-
-  var navCartBtn = document.getElementById('nav-cart-btn');
-  if (navCartBtn) navCartBtn.addEventListener('click', openCart);
-
-  /* ── Add to cart ── */
-  document.querySelectorAll('.btn-add-cart').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var product = getProductData(this);
-      var existing = findItem(product.name);
-
-      if (existing > -1) {
-        cart[existing].qty += 1;
-      } else {
-        cart.push(product);
-      }
-
-      renderCart();
-      updateCountBadge();
-
-      /* flash feedback on button */
-      var self = this;
-      self.classList.add('added');
-      var plus = self.querySelector('.btn-plus');
-      if (plus) {
-        var orig = plus.textContent;
-        plus.textContent = '✓';
-        setTimeout(function(){
-          plus.textContent = orig;
-          self.classList.remove('added');
-        }, 900);
-      }
-
-      /* open cart drawer with a tiny delay so flash is visible */
-      setTimeout(openCart, 260);
     });
   });
 
@@ -1283,12 +1064,11 @@
      CATEGORY FILTER
   ══════════════════════════════════════════ */
   (function() {
-    var catItems    = document.querySelectorAll('#category-list li');
-    var allCards    = document.querySelectorAll('.product-card');
-    var countLabel  = document.getElementById('shop-count-num');
-    var catTagWrap  = document.getElementById('cat-tag-wrap');
-    var emptyState  = document.getElementById('cat-empty-state');
-
+    var catItems   = document.querySelectorAll('#category-list li');
+    var allCards   = document.querySelectorAll('.product-card');
+    var countLabel = document.getElementById('shop-count-num');
+    var catTagWrap = document.getElementById('cat-tag-wrap');
+    var emptyState = document.getElementById('cat-empty-state');
     var activeCategory = 'all';
 
     var catLabels = {
@@ -1302,26 +1082,14 @@
 
     function filterProducts(cat) {
       activeCategory = cat;
-
-      /* Update sidebar active state */
-      catItems.forEach(function(li) {
-        li.classList.toggle('active', li.dataset.category === cat);
-      });
-
-      /* Fade out all visible cards first */
-      allCards.forEach(function(card) {
-        card.classList.remove('cat-fade-in');
-        card.classList.add('cat-fade-out');
-      });
-
+      catItems.forEach(function(li) { li.classList.toggle('active', li.dataset.category === cat); });
+      allCards.forEach(function(card) { card.classList.remove('cat-fade-in'); card.classList.add('cat-fade-out'); });
       setTimeout(function() {
         var visible = 0;
-        allCards.forEach(function(card, idx) {
+        allCards.forEach(function(card) {
           var cardCat = card.dataset.category || 'all';
-          var show    = (cat === 'all') || (cardCat === cat);
-
+          var show = (cat === 'all') || (cardCat === cat);
           card.classList.remove('cat-fade-out', 'cat-hidden');
-
           if (show) {
             card.classList.add('cat-fade-in');
             card.style.animationDelay = (visible * 0.06) + 's';
@@ -1330,38 +1098,22 @@
             card.classList.add('cat-hidden');
           }
         });
-
-        /* Update count */
         if (countLabel) countLabel.textContent = visible;
-
-        /* Empty state */
-        if (emptyState) {
-          emptyState.classList.toggle('visible', visible === 0);
-        }
-
-        /* Category pill tag */
+        if (emptyState) emptyState.classList.toggle('visible', visible === 0);
         if (catTagWrap) {
           if (cat === 'all') {
             catTagWrap.innerHTML = '';
           } else {
             catTagWrap.innerHTML =
-              '<span class="shop-category-tag">' +
-                catLabels[cat] +
-                ' <span class="cat-tag-x" id="cat-tag-clear" title="Clear filter">✕</span>' +
-              '</span>';
+              '<span class="shop-category-tag">' + catLabels[cat] +
+              ' <span class="cat-tag-x" id="cat-tag-clear" title="Clear filter">✕</span></span>';
             var clearBtn = document.getElementById('cat-tag-clear');
-            if (clearBtn) {
-              clearBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                filterProducts('all');
-              });
-            }
+            if (clearBtn) clearBtn.addEventListener('click', function(e) { e.stopPropagation(); filterProducts('all'); });
           }
         }
       }, 220);
     }
 
-    /* Bind sidebar clicks */
     catItems.forEach(function(li) {
       li.addEventListener('click', function() {
         var cat = this.dataset.category || 'all';
@@ -1369,10 +1121,11 @@
       });
     });
 
-    /* Init count */
     filterProducts('all');
   })();
-
 </script>
+
+<!-- Shared cart system — loads AFTER inline scripts -->
+<script src="cart.js"></script>
 </body>
 </html>

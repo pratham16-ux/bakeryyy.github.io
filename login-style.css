@@ -444,3 +444,36 @@
   .lbtn-submit { padding: 0.85rem 1rem; }
   .role-btn .role-desc { font-size: 0.65rem; }
 }
+
+/* ── Desktop scroll only ───────────────────────────── */
+@media (min-width: 901px) {
+  html,
+  body {
+    height: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  .login-body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* Custom scrollbar */
+  .login-body::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .login-body::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .login-body::-webkit-scrollbar-thumb {
+    background: var(--caramel);
+    border-radius: 10px;
+  }
+
+  .login-body::-webkit-scrollbar-thumb:hover {
+    background: var(--brown);
+  }
+}
