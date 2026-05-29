@@ -47,7 +47,7 @@
   /* ── Helpers ── */
   function formatPrice(n) { return '£' + n.toFixed(2); }
 
-  /* ── Badge update (navbar cart icon count) ── */
+  /* ── Badge update ── */
   function updateCountBadge() {
     var total = cart.reduce(function (s, i) { return s + i.qty; }, 0);
     document.querySelectorAll('.cart-badge, #cart-badge').forEach(function (el) {
@@ -134,7 +134,53 @@
   window.StacklyCart.open  = openCart;
   window.StacklyCart.close = closeCart;
 
-  /* ── DOM ready wiring ── */
+  /* ══════════════════════════════════════════
+     DATA EXTRACTOR
+     Works for BOTH page types:
+       shop page  → closest .product-card  → .product-name / .product-price
+       menu page  → closest .menu-item-card → .menu-item-name / .menu-price
+     Chef special → data-name / data-price / data-img on the button itself
+  ══════════════════════════════════════════ */
+  function getItemData(btn) {
+    /* Chef special — data attributes take priority */
+    if (btn.dataset.name) {
+      return {
+        name:  btn.dataset.name.trim(),
+        price: parseFloat(btn.dataset.price) || 0,
+        img:   btn.dataset.img || ''
+      };
+    }
+
+    /* Shop card */
+    var shopCard = btn.closest('.product-card');
+    if (shopCard) {
+      var nameEl  = shopCard.querySelector('.product-name');
+      var priceEl = shopCard.querySelector('.product-price');
+      var imgEl   = shopCard.querySelector('.product-img img, img');
+      return {
+        name:  nameEl  ? nameEl.textContent.trim()  : '',
+        price: priceEl ? parseFloat(priceEl.textContent.replace(/[^0-9.]/g, '')) || 0 : 0,
+        img:   imgEl   ? (imgEl.getAttribute('src') || '') : ''
+      };
+    }
+
+    /* Menu card */
+    var menuCard = btn.closest('.menu-item-card');
+    if (menuCard) {
+      var nameEl  = menuCard.querySelector('.menu-item-name');
+      var priceEl = menuCard.querySelector('.menu-price');
+      var imgEl   = menuCard.querySelector('.menu-item-img img, img');
+      return {
+        name:  nameEl  ? nameEl.textContent.trim()  : '',
+        price: priceEl ? parseFloat(priceEl.textContent.replace(/[^0-9.]/g, '')) || 0 : 0,
+        img:   imgEl   ? (imgEl.getAttribute('src') || '') : ''
+      };
+    }
+
+    return { name: '', price: 0, img: '' };
+  }
+
+  /* ── DOM ready ── */
   document.addEventListener('DOMContentLoaded', function () {
 
     /* Cart close */
@@ -148,14 +194,16 @@
       btn.addEventListener('click', openCart);
     });
 
-    /* ── Add-to-cart buttons (shop.html style: .product-add.btn-add-cart) ── */
+    /* ── ALL add-to-cart buttons (shop + menu + chef special) ── */
     document.querySelectorAll('.btn-add-cart').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
-        var product = getProductData(this);
-        window.StacklyCart.add(product);
 
-        /* flash feedback */
+        var item = getItemData(this);
+        if (!item.name) return;          /* safety guard */
+        window.StacklyCart.add(item);
+
+        /* Shop-style expand-button flash (✓ in btn-plus) */
         var self = this;
         self.classList.add('added');
         var plus = self.querySelector('.btn-plus');
@@ -167,58 +215,15 @@
             self.classList.remove('added');
           }, 900);
         }
-        /* Also handle menu-style add buttons */
-        var menuBtn = self.closest('.menu-item-add-btn') || (self.classList.contains('menu-item-add-btn') ? self : null);
-        if (!plus && menuBtn) {
-          var origHTML = self.innerHTML;
-          self.innerHTML = '<i class="fas fa-check"></i> Added';
-          self.style.background = 'var(--sage, #7a9e7e)';
-          setTimeout(function () {
-            self.innerHTML = origHTML;
-            self.style.background = '';
-          }, 900);
-        }
 
         setTimeout(openCart, 260);
       });
     });
 
-    /* ── Menu-style add buttons (.menu-item-add-btn) ── */
-    document.querySelectorAll('.menu-item-add-btn').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var product = getMenuItemData(this);
-        window.StacklyCart.add(product);
-
-        /* flash */
-        var self = this;
-        var origHTML = self.innerHTML;
-        self.innerHTML = '<i class="fas fa-check"></i> Added!';
-        self.style.background = 'var(--sage, #7a9e7e)';
-        setTimeout(function () {
-          self.innerHTML = origHTML;
-          self.style.background = '';
-        }, 950);
-
-        setTimeout(openCart, 260);
-      });
-    });
-
-    /* Also handle "Add to Cart" on chef special / btn-primary */
-    document.querySelectorAll('.chef-special .btn-primary').forEach(function (btn) {
-      if (btn.textContent.trim().toLowerCase().includes('add')) {
-        btn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          var special = btn.closest('.chef-special');
-          if (!special) return;
-          var name  = (special.querySelector('.chef-special-title') || {}).textContent || 'Chef\'s Special';
-          var priceStr = ((special.querySelector('.chef-special-price') || {}).textContent || '0').replace(/[^0-9.]/g, '');
-          var price = parseFloat(priceStr) || 0;
-          var imgEl = special.querySelector('img');
-          var img   = imgEl ? imgEl.src : '';
-          window.StacklyCart.add({ name: name.trim(), price: price, img: img });
-          setTimeout(openCart, 260);
-        });
+    /* Checkout button → redirect to order page (delegation so footer visibility doesn't matter) */
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.cart-checkout-btn')) {
+        window.location.href = '404.html';
       }
     });
 
@@ -226,26 +231,5 @@
     renderCart();
     updateCountBadge();
   });
-
-  /* ── Data extractors ── */
-  function getProductData(btn) {
-    var card = btn.closest('.product-card');
-    var name = (card.querySelector('.product-name') || {}).textContent || '';
-    var priceStr = ((card.querySelector('.product-price') || {}).textContent || '0').replace(/[^0-9.]/g, '');
-    var price = parseFloat(priceStr) || 0;
-    var imgEl = card.querySelector('.product-img img, img');
-    var img   = imgEl ? imgEl.getAttribute('src') : '';
-    return { name: name.trim(), price: price, img: img };
-  }
-
-  function getMenuItemData(btn) {
-    var card = btn.closest('.menu-item-card');
-    var name = (card.querySelector('.menu-item-name') || {}).textContent || '';
-    var priceStr = ((card.querySelector('.menu-price') || {}).textContent || '0').replace(/[^0-9.]/g, '');
-    var price = parseFloat(priceStr) || 0;
-    var imgEl = card.querySelector('.menu-item-img img, img');
-    var img   = imgEl ? imgEl.getAttribute('src') : '';
-    return { name: name.trim(), price: price, img: img };
-  }
 
 })();

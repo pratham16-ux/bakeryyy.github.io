@@ -112,7 +112,7 @@
     }
     .seasonal-item-pill:hover { border-color: var(--caramel); color: var(--caramel); }
 
-    /* Tab bar upgrade */
+    /* Tab bar */
     .menu-tabs {
       position: sticky;
       top: var(--nav-h);
@@ -132,7 +132,7 @@
     .menu-tab-inner::-webkit-scrollbar { display: none; }
     .menu-tabs .menu-tab { padding: 1.1rem 1.8rem; white-space: nowrap; }
 
-    /* Item card polish */
+    /* Item card */
     .menu-item-card {
       background: var(--warm);
       border-radius: 8px;
@@ -150,7 +150,6 @@
       transition: opacity 0.4s;
     }
     .menu-item-card:hover::before { opacity: 1; }
-
     .menu-item-top-bar {
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -161,7 +160,6 @@
       transition: transform 0.4s var(--ease);
     }
     .menu-item-card:hover .menu-item-top-bar { transform: scaleX(1); }
-
     .menu-rating {
       display: flex;
       align-items: center;
@@ -170,7 +168,6 @@
     }
     .menu-rating-stars { color: var(--gold); font-size: 0.72rem; }
     .menu-rating-count { font-family: var(--font-ui); font-size: 0.66rem; color: rgba(59,32,18,0.38); }
-
     .menu-item-add-row {
       display: flex;
       align-items: center;
@@ -179,25 +176,74 @@
       padding-top: 1rem;
       border-top: 1px solid rgba(59,32,18,0.07);
     }
-    .menu-item-add-btn {
+
+    /* ══════════════════════════════════════════
+       SHOP-STYLE ADD-TO-CART BUTTON
+       (same as shop.html — expand on hover)
+    ══════════════════════════════════════════ */
+    .product-add {
+      height: 36px;
+      min-width: 36px;
+      border-radius: 50px;
+      background: var(--caramel);
+      color: var(--cream);
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      font-family: var(--font-ui);
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.5rem 1rem;
-      background: var(--brown);
-      color: var(--cream);
-      border-radius: 2px;
-      cursor: pointer;
+      justify-content: center;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0 10px;
+      gap: 0;
+      transition: min-width 0.38s var(--ease-out, cubic-bezier(0.16,1,0.3,1)),
+                  background 0.25s, transform 0.18s,
+                  gap 0.38s, padding 0.38s;
+      position: relative;
       border: none;
-      transition: background 0.3s, transform 0.2s;
+      cursor: pointer;
+      flex-shrink: 0;
     }
-    .menu-item-add-btn:hover { background: var(--caramel); transform: translateY(-1px); }
+    .product-add .btn-plus {
+      font-size: 1.3rem;
+      line-height: 1;
+      flex-shrink: 0;
+      color: var(--cream);
+      transition: transform 0.3s var(--ease-out, cubic-bezier(0.16,1,0.3,1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-add .btn-label {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cream);
+      max-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-width 0.38s var(--ease-out, cubic-bezier(0.16,1,0.3,1)),
+                  opacity 0.28s ease, margin-left 0.38s;
+      margin-left: 0;
+    }
+    .product-add:hover {
+      min-width: 128px;
+      background: var(--brown);
+      padding: 0 14px;
+      gap: 6px;
+    }
+    .product-add:hover .btn-plus  { transform: rotate(90deg); }
+    .product-add:hover .btn-label { max-width: 90px; opacity: 1; margin-left: 2px; }
+    .product-add.added {
+      background: #5a8a6a !important;
+      min-width: 36px !important;
+      gap: 0 !important;
+      padding: 0 10px !important;
+    }
+    .product-add.added .btn-plus  { transform: none !important; }
+    .product-add.added .btn-label { max-width: 0 !important; opacity: 0 !important; }
 
-    /* Chef special card */
+    /* Chef special */
     .chef-special {
       background: var(--brown);
       border-radius: 8px;
@@ -272,14 +318,11 @@
     }
     .bake-time-item { text-align: center; }
     .bake-time-clock {
-      width: 60px;
-      height: 60px;
+      width: 60px; height: 60px;
       border-radius: 50%;
       background: rgba(200,136,74,0.12);
       border: 2px solid rgba(200,136,74,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 1.4rem;
       margin: 0 auto 0.8rem;
       transition: all 0.3s;
@@ -295,39 +338,27 @@
     }
     .bake-time-desc { font-size: 0.86rem; color: rgba(59,32,18,0.58); font-weight: 300; }
 
-    /* ── NAV CART ICON ── */
+    /* Nav cart */
     .nav-cart-btn {
       position: relative;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--cream);
+      background: none; border: none;
+      cursor: pointer; color: var(--cream);
       font-size: 1.15rem;
       padding: 0.4rem 0.6rem;
-      display: inline-flex;
-      align-items: center;
+      display: inline-flex; align-items: center;
       transition: color 0.25s;
       margin-right: 0.25rem;
     }
     .nav-cart-btn:hover { color: var(--gold); }
     .nav-cart-count {
-      position: absolute;
-      top: -2px; right: -4px;
-      background: var(--caramel);
-      color: var(--cream);
-      font-family: var(--font-ui);
-      font-size: 0.58rem;
-      font-weight: 700;
-      min-width: 17px;
-      height: 17px;
-      border-radius: 50%;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
+      position: absolute; top: -2px; right: -4px;
+      background: var(--caramel); color: var(--cream);
+      font-family: var(--font-ui); font-size: 0.58rem; font-weight: 700;
+      min-width: 17px; height: 17px; border-radius: 50%;
+      display: none; align-items: center; justify-content: center; line-height: 1;
     }
 
-    /* ── CART DRAWER (same as shop.html) ── */
+    /* Cart drawer */
     .cart-overlay {
       position: fixed; inset: 0;
       background: rgba(26,14,7,0.55);
@@ -337,7 +368,6 @@
       transition: opacity 0.4s ease;
     }
     .cart-overlay.open { opacity: 1; pointer-events: all; }
-
     .cart-drawer {
       position: fixed; top: 0; right: 0; bottom: 0;
       width: min(420px, 100vw);
@@ -375,24 +405,20 @@
       transition: background 0.25s, color 0.25s;
     }
     .cart-close-btn:hover { background: var(--caramel); color: var(--cream); }
-    .cart-drawer-body {
-      flex: 1; overflow-y: auto; padding: 1rem 1.8rem;
-    }
+    .cart-drawer-body { flex: 1; overflow-y: auto; padding: 1rem 1.8rem; }
     .cart-drawer-body::-webkit-scrollbar { width: 3px; }
     .cart-drawer-body::-webkit-scrollbar-thumb { background: var(--caramel); border-radius: 3px; }
     .cart-empty-state {
       display: flex; flex-direction: column; align-items: center;
       justify-content: center; height: 100%; gap: 1rem;
-      color: rgba(59,32,18,0.38); text-align: center;
-      padding: 3rem 1rem;
+      color: rgba(59,32,18,0.38); text-align: center; padding: 3rem 1rem;
     }
     .cart-empty-state i { font-size: 3rem; color: rgba(200,136,74,0.35); }
     .cart-empty-state p { font-family: var(--font-display); font-size: 1.1rem; color: var(--brown); margin: 0; }
     .cart-empty-state span { font-family: var(--font-ui); font-size: 0.8rem; letter-spacing: 0.05em; }
     .cart-item {
       display: flex; align-items: center; gap: 1rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(59,32,18,0.07);
+      padding: 1rem 0; border-bottom: 1px solid rgba(59,32,18,0.07);
       animation: cartItemIn 0.35s ease;
     }
     @keyframes cartItemIn { from { opacity:0; transform:translateX(18px); } to { opacity:1; transform:none; } }
@@ -407,19 +433,13 @@
       background: rgba(59,32,18,0.08);
       display: flex; align-items: center; justify-content: center;
       font-size: 0.9rem; color: var(--brown);
-      cursor: pointer; border: none;
-      transition: background 0.2s;
+      cursor: pointer; border: none; transition: background 0.2s;
     }
     .cart-qty-btn:hover { background: var(--caramel); color: var(--cream); }
     .cart-qty-num { font-family: var(--font-ui); font-size: 0.82rem; font-weight: 500; color: var(--brown); min-width: 18px; text-align: center; }
     .cart-item-remove { color: rgba(59,32,18,0.28); font-size: 0.78rem; cursor: pointer; border: none; background: none; padding: 0.2rem; transition: color 0.2s; }
     .cart-item-remove:hover { color: #c0392b; }
-    .cart-drawer-footer {
-      padding: 1.2rem 1.8rem 2rem;
-      border-top: 1px solid rgba(59,32,18,0.09);
-      flex-shrink: 0;
-      display: none;
-    }
+    .cart-drawer-footer { padding: 1.2rem 1.8rem 2rem; border-top: 1px solid rgba(59,32,18,0.09); flex-shrink: 0; display: none; }
     .cart-drawer-footer.visible { display: block; }
     .cart-subtotal-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; }
     .cart-subtotal-label { font-family: var(--font-ui); font-size: 0.78rem; color: rgba(59,32,18,0.5); letter-spacing: 0.06em; }
@@ -440,7 +460,6 @@
     .cart-view-order { display: block; text-align: center; margin-top: 0.9rem; font-family: var(--font-ui); font-size: 0.74rem; color: var(--caramel); letter-spacing: 0.06em; text-decoration: none; transition: color 0.2s; }
     .cart-view-order:hover { opacity: 0.8; }
 
-    /* Responsive */
     @media (max-width: 900px) {
       .seasonal-inner { grid-template-columns: 1fr; }
       .seasonal-img { height: 240px; }
@@ -486,10 +505,8 @@
       <span class="cart-subtotal-val" id="cart-subtotal">£0.00</span>
     </div>
     <div class="cart-delivery-note">🚴 Free delivery on orders over £25</div>
-    <button class="cart-checkout-btn">
-      <span>Proceed to Order</span>
-    </button>
-    <a href="shop.html" class="cart-view-order">View your full order →</a>
+    <button class="cart-checkout-btn"><span>Proceed to Order</span></button>
+    <a href="404.html" class="cart-view-order">View your full order →</a>
   </div>
 </aside>
 
@@ -521,7 +538,6 @@
     <a href="about.html">About</a>
     <a href="contact.html">Contact</a>
   </nav>
-  <!-- Cart icon + Login -->
   <button class="nav-cart-btn" id="nav-cart-btn" aria-label="Open cart">
     <i class="fas fa-shopping-basket"></i>
     <span class="nav-cart-count" id="cart-count">0</span>
@@ -535,8 +551,8 @@
 <!-- INNER HERO -->
 <section class="inner-hero">
   <picture>
-    <source srcset="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1600&q=80&fit=crop&fm=webp" type="image/webp" />
-    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1600&q=80&fit=crop" alt="Baker at work" loading="eager" />
+    <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1558961363-fa8fdf82db35&w=900&output=webp&q=60&fit=cover" type="image/webp" />
+    <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1558961363-fa8fdf82db35&w=900&output=webp&q=60&fit=cover" alt="Baker at work" loading="eager" />
   </picture>
   <div class="inner-hero-content container">
     <div class="menu-hero-badge">
@@ -580,8 +596,8 @@
     <div class="seasonal-inner">
       <div class="seasonal-img reveal-left">
         <picture>
-          <source srcset="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800&q=80&fit=crop&fm=webp" type="image/webp" />
-          <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800&q=80&fit=crop" alt="Seasonal bakes" loading="lazy" />
+          <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1464349095431-e9a21285b5f3&w=700&output=webp&q=60&fit=cover" type="image/webp" />
+          <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1464349095431-e9a21285b5f3&w=700&output=webp&q=60&fit=cover" alt="Seasonal bakes" loading="lazy" />
         </picture>
       </div>
       <div class="reveal-right">
@@ -600,7 +616,7 @@
   </div>
 </div>
 
-<!-- MENU TABS + PANELS -->
+<!-- MENU TABS -->
 <div class="menu-tabs">
   <div class="menu-tab-inner">
     <button class="menu-tab active" data-tab="breads">Artisan Breads</button>
@@ -615,14 +631,15 @@
 <section class="section menu-section">
   <div class="container">
 
-    <!-- BREADS PANEL -->
+    <!-- ════════════════ BREADS PANEL ════════════════ -->
     <div class="menu-panel active" id="panel-breads">
+
       <!-- Chef's pick -->
       <div class="chef-special reveal">
         <div class="chef-special-img">
           <picture>
-            <source srcset="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=800&q=80&fit=crop&fm=webp" type="image/webp" />
-            <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=800&q=80&fit=crop" alt="Country Sourdough" loading="lazy" />
+            <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1586444248902-2f64eddc13df&w=700&output=webp&q=60&fit=cover" type="image/webp" />
+            <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1586444248902-2f64eddc13df&w=700&output=webp&q=60&fit=cover" alt="Country Sourdough" loading="lazy" />
           </picture>
         </div>
         <div class="chef-special-body">
@@ -630,17 +647,24 @@
           <div class="chef-special-title">Country Sourdough</div>
           <div class="chef-special-desc">Our flagship loaf. 72-hour cold ferment using a 15-year-old starter, stone-milled heritage wheat, and a hand-scored crust that shatters beautifully. A love letter to real bread.</div>
           <div class="chef-special-price">£7.50</div>
-          <button class="btn btn-primary btn-arrow chef-add-btn" style="margin-top:1.4rem" data-name="Country Sourdough" data-price="7.50" data-img="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=800&q=80&fit=crop">Add to Cart</button>
+          <!-- Same shop-style button, data attrs feed cart.js -->
+          <button class="product-add btn-add-cart chef-special-add" title="Add to cart"
+                  data-name="Country Sourdough" data-price="7.50"
+                  data-img="https://wsrv.nl/?url=https://images.unsplash.com/photo-1586444248902-2f64eddc13df&w=700&output=webp&q=60&fit=cover"
+                  style="margin-top:1.4rem; border-radius:8px; height:48px; min-width:48px;">
+            <span class="btn-plus">+</span><span class="btn-label">Add to cart</span>
+          </button>
         </div>
       </div>
 
       <div class="menu-grid">
+
         <div class="menu-item-card reveal" data-delay="1">
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://flour.co.uk/wp-content/uploads/2021/04/MarriagesDarkRyeloaf-1-e1672827142751.jpg.webp" type="image/webp" />
-              <img src="https://flour.co.uk/wp-content/uploads/2021/04/MarriagesDarkRyeloaf-1-e1672827142751.jpg.webp" alt="Seeded Rye" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1509440159596-0249088772ff&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1509440159596-0249088772ff&w=500&output=webp&q=65&fit=cover" alt="Seeded Rye" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -650,7 +674,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Seeds</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£6.80</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -659,8 +683,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1534432182912-63863115e106?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1534432182912-63863115e106?w=500&q=80&fit=crop" alt="Focaccia" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1534432182912-63863115e106&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1534432182912-63863115e106&w=500&output=webp&q=65&fit=cover" alt="Focaccia" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -670,7 +694,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Vegan</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£5.00</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -679,8 +703,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=500&q=80&fit=crop" alt="Einkorn Batard" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1608198093002-ad4e005484ec&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1608198093002-ad4e005484ec&w=500&output=webp&q=65&fit=cover" alt="Einkorn Batard" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -690,7 +714,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£8.20</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -699,8 +723,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=500&q=80&fit=crop" alt="Walnut Levain" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1598373182133-52452f7691ef&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1598373182133-52452f7691ef&w=500&output=webp&q=65&fit=cover" alt="Walnut Levain" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -710,7 +734,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Nuts</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£8.90</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -719,8 +743,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1574085733277-851d9d856a3a?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1574085733277-851d9d856a3a?w=500&q=80&fit=crop" alt="Brioche" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1574085733277-851d9d856a3a&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1574085733277-851d9d856a3a&w=500&output=webp&q=65&fit=cover" alt="Brioche" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -730,7 +754,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Eggs</span><span class="allergen">Dairy</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£6.50</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -739,8 +763,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://www.biggerbolderbaking.com/wp-content/uploads/2020/04/Easy-New-York-Style-Bagel-Recipe-WS-Thumbnail-2-500x500.jpg" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1627662235754-d37a5c74b7e3?w=500&q=80&fit=crop" alt="Bagels" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1549931319-a545dcf3bc73&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1549931319-a545dcf3bc73&w=500&output=webp&q=65&fit=cover" alt="Bagels" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -750,14 +774,15 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Seeds</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£7.20</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- PASTRIES PANEL -->
+    <!-- ════════════════ PASTRIES PANEL ════════════════ -->
     <div class="menu-panel" id="panel-pastries">
       <div class="menu-grid">
 
@@ -765,8 +790,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&q=80&fit=crop" alt="Butter Croissant" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1555507036-ab1f4038808a&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1555507036-ab1f4038808a&w=500&output=webp&q=65&fit=cover" alt="Butter Croissant" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -776,7 +801,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Dairy</span><span class="allergen">Eggs</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£3.20</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -785,8 +810,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1548365328-8c6db3220e4c?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1548365328-8c6db3220e4c?w=500&q=80&fit=crop" alt="Almond Croissant" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1548365328-8c6db3220e4c&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1548365328-8c6db3220e4c&w=500&output=webp&q=65&fit=cover" alt="Almond Croissant" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -796,7 +821,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Nuts</span><span class="allergen">Dairy</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£4.20</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -805,8 +830,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=80&fit=crop" alt="Cardamom Roll" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1464349095431-e9a21285b5f3&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1464349095431-e9a21285b5f3&w=500&output=webp&q=65&fit=cover" alt="Cardamom Roll" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -816,7 +841,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Dairy</span><span class="allergen">Eggs</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£3.50</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -825,8 +850,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&q=80&fit=crop" alt="Pain au Chocolat" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1558961363-fa8fdf82db35&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1558961363-fa8fdf82db35&w=500&output=webp&q=65&fit=cover" alt="Pain au Chocolat" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -836,7 +861,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Dairy</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£3.80</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -845,8 +870,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://kukissbakery.com/cdn/shop/files/Kouign-amann.jpg?v=1775158852" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1520218747668-a1d58ad7d5ff?w=500&q=80&fit=crop" alt="Kouign Amann" loading="lazy" />
+              <source srcset="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=500&fm=webp&q=65&fit=crop" type="image/webp" />
+              <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=500&fm=webp&q=65&fit=crop" alt="Kouign Amann" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -856,7 +881,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Dairy</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£4.80</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -865,8 +890,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=500&q=80&fit=crop" alt="Eclair" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1607958996333-41aef7caefaa&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1607958996333-41aef7caefaa&w=500&output=webp&q=65&fit=cover" alt="Eclair" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -876,7 +901,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Dairy</span><span class="allergen">Eggs</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£4.50</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -884,7 +909,7 @@
       </div>
     </div>
 
-    <!-- CAKES PANEL -->
+    <!-- ════════════════ CAKES PANEL ════════════════ -->
     <div class="menu-panel" id="panel-cakes">
       <div class="menu-grid">
 
@@ -892,8 +917,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=500&q=80&fit=crop" alt="Lemon Tart" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1571115177098-24ec42ed204d&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1571115177098-24ec42ed204d&w=500&output=webp&q=65&fit=cover" alt="Lemon Tart" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -903,7 +928,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Eggs</span><span class="allergen">Dairy</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£5.80</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -912,8 +937,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=500&q=80&fit=crop" alt="Victoria Sponge" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1486427944299-d1955d23e34d&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1486427944299-d1955d23e34d&w=500&output=webp&q=65&fit=cover" alt="Victoria Sponge" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -923,7 +948,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Dairy</span><span class="allergen">Eggs</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£28.00</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -932,8 +957,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://7thheavendehradun.in/wp-content/uploads/2025/09/10.webp" type="image/webp" />
-              <img src="https://7thheavendehradun.in/wp-content/uploads/2025/09/10.webp" alt="Dark Chocolate Cake" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1578985545062-69928b1d9587&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1578985545062-69928b1d9587&w=500&output=webp&q=65&fit=cover" alt="Dark Chocolate Cake" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -943,7 +968,7 @@
             <div class="allergen-tags"><span class="allergen">Gluten</span><span class="allergen">Dairy</span><span class="allergen">Eggs</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£32.00</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -951,7 +976,7 @@
       </div>
     </div>
 
-    <!-- COFFEE PANEL -->
+    <!-- ════════════════ COFFEE PANEL ════════════════ -->
     <div class="menu-panel" id="panel-coffee">
       <div class="menu-grid">
 
@@ -959,8 +984,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80&fit=crop" alt="Flat White" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1495474472287-4d71bcdd2085&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1495474472287-4d71bcdd2085&w=500&output=webp&q=65&fit=cover" alt="Flat White" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -970,7 +995,7 @@
             <div class="allergen-tags"><span class="allergen">Dairy</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£3.50</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -979,8 +1004,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1509785307050-d4066910ec1e?w=500&q=80&fit=crop" alt="Matcha Latte" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1509785307050-d4066910ec1e&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1509785307050-d4066910ec1e&w=500&output=webp&q=65&fit=cover" alt="Matcha Latte" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -990,7 +1015,7 @@
             <div class="allergen-tags"><span class="allergen">Oat</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£4.20</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -999,8 +1024,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&q=80&fit=crop" alt="Hot Chocolate" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1461023058943-07fcbe16d735&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1461023058943-07fcbe16d735&w=500&output=webp&q=65&fit=cover" alt="Hot Chocolate" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -1010,7 +1035,7 @@
             <div class="allergen-tags"><span class="allergen">Dairy</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£4.50</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -1018,15 +1043,16 @@
       </div>
     </div>
 
-    <!-- VEGAN PANEL -->
+    <!-- ════════════════ VEGAN PANEL ════════════════ -->
     <div class="menu-panel" id="panel-vegan">
       <div class="menu-grid">
+
         <div class="menu-item-card reveal" data-delay="1">
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80&fit=crop" alt="Vegan Banana Bread" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1565958011703-44f9829ba187&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1565958011703-44f9829ba187&w=500&output=webp&q=65&fit=cover" alt="Vegan Banana Bread" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -1036,7 +1062,7 @@
             <div class="allergen-tags"><span class="allergen">Vegan</span><span class="allergen">Gluten</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£3.80</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -1045,8 +1071,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500&q=80&fit=crop" alt="GF Almond Cake" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1606313564200-e75d5e30476c&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1606313564200-e75d5e30476c&w=500&output=webp&q=65&fit=cover" alt="GF Almond Cake" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -1056,7 +1082,7 @@
             <div class="allergen-tags"><span class="allergen">GF</span><span class="allergen">Nuts</span><span class="allergen">Eggs</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£5.20</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
@@ -1065,8 +1091,8 @@
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1534432182912-63863115e106?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1534432182912-63863115e106?w=500&q=80&fit=crop" alt="Vegan Focaccia" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1534432182912-63863115e106&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1534432182912-63863115e106&w=500&output=webp&q=65&fit=cover" alt="Vegan Focaccia" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -1076,22 +1102,24 @@
             <div class="allergen-tags"><span class="allergen">Vegan</span><span class="allergen">Gluten</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£5.50</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- SEASONAL PANEL -->
+    <!-- ════════════════ SEASONAL PANEL ════════════════ -->
     <div class="menu-panel" id="panel-seasonal">
       <div class="menu-grid">
+
         <div class="menu-item-card reveal" data-delay="1">
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=80&fit=crop" alt="Peach Galette" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1464349095431-e9a21285b5f3&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1464349095431-e9a21285b5f3&w=500&output=webp&q=65&fit=cover" alt="Peach Galette" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -1101,16 +1129,17 @@
             <div class="allergen-tags"><span class="allergen">Seasonal</span><span class="allergen">Gluten</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£6.20</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
+
         <div class="menu-item-card reveal" data-delay="2">
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=500&q=80&fit=crop" alt="Elderflower Cream Puff" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1571115177098-24ec42ed204d&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1571115177098-24ec42ed204d&w=500&output=webp&q=65&fit=cover" alt="Elderflower Cream Puff" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -1120,16 +1149,17 @@
             <div class="allergen-tags"><span class="allergen">Seasonal</span><span class="allergen">Dairy</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£5.20</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
+
         <div class="menu-item-card reveal" data-delay="3">
           <div class="menu-item-top-bar"></div>
           <div class="menu-item-img">
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=500&q=80&fit=crop&fm=webp" type="image/webp" />
-              <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=500&q=80&fit=crop" alt="Honey Rye Loaf" loading="lazy" />
+              <source srcset="https://wsrv.nl/?url=https://images.unsplash.com/photo-1586444248902-2f64eddc13df&w=500&output=webp&q=65&fit=cover" type="image/webp" />
+              <img src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1586444248902-2f64eddc13df&w=500&output=webp&q=65&fit=cover" alt="Honey Rye Loaf" loading="lazy" />
             </picture>
           </div>
           <div class="menu-item-body">
@@ -1139,10 +1169,11 @@
             <div class="allergen-tags"><span class="allergen">Seasonal</span><span class="allergen">Gluten</span></div>
             <div class="menu-item-add-row">
               <div class="menu-price">£9.50</div>
-              <button class="menu-item-add-btn"><i class="fas fa-plus"></i> Add</button>
+              <button class="product-add btn-add-cart" title="Add to cart"><span class="btn-plus">+</span><span class="btn-label">Add to cart</span></button>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -1196,8 +1227,8 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo-wrap">
-         <a href="index.html"> <img src="https://snabsolutions.in/wp-content/uploads/2026/02/stackly-snab-solutions.png" alt="Stackly Bakery" class="footer-logo-img" loading="lazy" />
-       </a> </div>
+          <a href="index.html"><img src="https://snabsolutions.in/wp-content/uploads/2026/02/stackly-snab-solutions.png" alt="Stackly Bakery" class="footer-logo-img" loading="lazy" /></a>
+        </div>
         <p>An artisan bakery rooted in tradition, driven by flavour. Every loaf, every pastry, every cake — made by hand, with love, every morning since 2003.</p>
         <div class="footer-socials">
           <a href="404.html" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -1231,7 +1262,7 @@
         <ul class="footer-links">
           <li><a href="404.html">14 Mill Lane, London SE1</a></li>
           <li><a href="404.html">+44 207 123 4567</a></li>
-          <li><a href="mailto:hello@stacklybakery.com">hello@stacklybakery.com</a></li>
+          <li><a href="404.html">hello@stacklybakery.com</a></li>
           <li><a href="404.html">Mon–Fri: 7am – 6pm</a></li>
           <li><a href="404.html">Sat–Sun: 8am – 4pm</a></li>
         </ul>
@@ -1249,7 +1280,6 @@
 </footer>
 
 <script src="main.js"></script>
-<!-- Shared cart system — must come AFTER main.js -->
 <script src="cart.js"></script>
 </body>
 </html>
