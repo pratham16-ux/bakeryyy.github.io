@@ -141,9 +141,9 @@ document.addEventListener('DOMContentLoaded', function () {
       var overlay = document.getElementById('page-overlay');
       if (overlay) {
         overlay.classList.add('active');
-        setTimeout(function () { window.location.href = 'login.html'; }, 550);
+        setTimeout(function () { window.location.href = 'index.html'; }, 550);
       } else {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
       }
     });
   }
