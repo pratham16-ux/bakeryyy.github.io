@@ -1,0 +1,1443 @@
+/* ================================================================
+   STACKLY BAKERY — mobile-responsive.css
+   Drop-in patch: add <link rel="stylesheet" href="mobile-responsive.css" />
+   as the LAST stylesheet on every page (after style.css, dashboard-style.css,
+   login-style.css, etc.) — it overrides what needs fixing.
+================================================================ */
+
+/* ================================================================
+   GLOBAL SAFE BASE
+================================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+img, picture, video, canvas, svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* ================================================================
+   NAVBAR
+================================================================ */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 1rem;
+    height: 64px;
+  }
+
+  .nav-logo-img {
+    height: 46px;
+  }
+
+  .nav-links,
+  .nav-cta {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex !important;
+  }
+}
+
+/* ================================================================
+   MOBILE MENU
+================================================================ */
+@media (max-width: 768px) {
+  .mobile-menu a {
+    font-size: clamp(1.7rem, 8vw, 2.8rem);
+  }
+
+  .mobile-menu-footer {
+    font-size: 0.6rem;
+    bottom: 1.5rem;
+  }
+}
+
+/* ================================================================
+   HERO — HOME (index.html)
+================================================================ */
+@media (max-width: 768px) {
+  .hero-home {
+    min-height: 100svh;
+    padding-top: 64px;
+  }
+
+  .hero-content {
+    padding: 3.5rem 1.25rem 0;
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 9vw, 3.2rem);
+    line-height: 1.05;
+  }
+
+  .hero-text {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hero-btns .btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.72rem;
+    padding: 0.85rem 1.25rem;
+  }
+
+  .slider-nav {
+    left: 1.25rem;
+    bottom: 1.75rem;
+  }
+
+  .slider-counter {
+    right: 1.25rem;
+    bottom: 1.75rem;
+    font-size: 0.7rem;
+  }
+
+  .scroll-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(1.7rem, 10vw, 2.6rem);
+  }
+
+  .hero-eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+  }
+}
+
+/* ================================================================
+   INNER HERO (about, menu, shop pages)
+================================================================ */
+@media (max-width: 768px) {
+  .inner-hero {
+    height: auto;
+    min-height: 260px;
+    padding-top: 64px;
+    padding-bottom: 2.5rem;
+  }
+
+  .inner-hero-content {
+    padding: 0 1.25rem;
+  }
+
+  .inner-hero-title {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
+  .breadcrumb {
+    font-size: 0.7rem;
+    margin-top: 0.6rem;
+  }
+}
+
+/* ================================================================
+   MARQUEE BAR
+================================================================ */
+@media (max-width: 480px) {
+  .marquee-item {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    padding: 0 1.5rem;
+  }
+}
+
+/* ================================================================
+   FEATURE STRIP (index.html)
+================================================================ */
+@media (max-width: 768px) {
+  .feature-strip-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .feature-strip-item {
+    border-right: none;
+    border-bottom: 1px solid rgba(59,32,18,0.1);
+    padding: 1.25rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .feature-strip-item:nth-child(odd) {
+    border-right: 1px solid rgba(59,32,18,0.1);
+  }
+
+  .feature-strip-name { font-size: 0.88rem; }
+  .feature-strip-desc { font-size: 0.76rem; }
+}
+
+@media (max-width: 360px) {
+  .feature-strip-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-strip-item:nth-child(odd) {
+    border-right: none;
+  }
+}
+
+/* ================================================================
+   CATEGORIES GRID (index.html)
+================================================================ */
+@media (max-width: 768px) {
+  .categories-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .cat-card {
+    height: 240px;
+  }
+
+  .cat-card-name {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cat-card {
+    height: 220px;
+  }
+}
+
+/* ================================================================
+   ABOUT TEASER (index.html)
+================================================================ */
+@media (max-width: 900px) {
+  .about-teaser-inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-image-stack {
+    height: 380px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-img-accent { display: none; }
+
+  .about-image-stack { height: 300px; }
+
+  .about-features {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .about-feat-text { font-size: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+  .about-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================================================
+   PRODUCTS CAROUSEL (index.html)
+================================================================ */
+@media (max-width: 768px) {
+  .product-card {
+    flex: 0 0 calc(50% - 0.7rem);
+  }
+
+  .carousel-prev { left: -10px; }
+  .carousel-next { right: -10px; }
+}
+
+@media (max-width: 480px) {
+  .product-card {
+    flex: 0 0 calc(90% - 0.7rem);
+  }
+
+  .products-carousel { padding: 0 1.5rem; }
+}
+
+/* ================================================================
+   STATS SECTION
+================================================================ */
+@media (max-width: 768px) {
+  .stats-section { padding: 4rem 0; }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================================================
+   PROCESS SECTION (index.html)
+================================================================ */
+@media (max-width: 900px) {
+  .process-track {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 2.5rem;
+  }
+
+  .process-step:nth-child(3) .process-connector,
+  .process-step:nth-child(6) .process-connector {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .process-track {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 2rem;
+  }
+
+  .process-connector { display: none !important; }
+
+  .process-title { font-size: 0.95rem; }
+  .process-desc  { font-size: 0.75rem; }
+}
+
+@media (max-width: 400px) {
+  .process-track { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
+   WORKSHOPS (index.html)
+================================================================ */
+@media (max-width: 900px) {
+  .workshops-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .workshops-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .workshops-grid { grid-template-columns: 1fr; }
+
+  .workshops-banner-text {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .workshops-banner .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .workshop-img { height: 200px; }
+  .workshop-img picture img { height: 200px; }
+}
+
+/* ================================================================
+   TESTIMONIALS (index.html)
+================================================================ */
+@media (max-width: 768px) {
+  .testimonial-slide {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .testimonial-img {
+    height: 260px;
+  }
+
+  .testimonial-img::after {
+    display: none;
+  }
+
+  .testimonial-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* ================================================================
+   INSTAGRAM GALLERY (index.html)
+================================================================ */
+@media (max-width: 768px) {
+  .insta-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 150px);
+  }
+
+  .insta-item:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .insta-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+
+  .insta-item { height: 140px; }
+}
+
+/* ================================================================
+   NEWSLETTER
+================================================================ */
+@media (max-width: 768px) {
+  .newsletter-section { padding: 5rem 0; }
+
+  .newsletter-inner {
+    padding: 0 1.25rem;
+    text-align: center;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    gap: 0.75rem;
+    border-radius: 6px;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+    border-radius: 6px;
+  }
+}
+
+/* ================================================================
+   FOOTER
+================================================================ */
+@media (max-width: 768px) {
+  footer { padding: 4rem 0 0; }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    align-items: center;
+  }
+
+  .footer-logo-wrap,
+  .footer-socials {
+    justify-content: center;
+  }
+
+  .footer-brand p { margin-inline: auto; }
+
+  .footer-col-title,
+  .footer-links li {
+    text-align: center;
+  }
+
+  .footer-links { padding: 0; }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 1.5rem 0;
+  }
+
+  .footer-legal {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+
+/* ================================================================
+   SECTION COMMONS
+================================================================ */
+@media (max-width: 768px) {
+  .section { padding: 4rem 0; }
+
+  .section-title {
+    font-size: clamp(1.7rem, 6vw, 2.4rem);
+  }
+
+  .section-sub {
+    font-size: 0.95rem;
+  }
+
+  .container,
+  .container-wide {
+    padding: 0 1.25rem;
+  }
+}
+
+/* ================================================================
+   ABOUT PAGE — about.html
+================================================================ */
+@media (max-width: 900px) {
+  .about-story-inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-story-img {
+    height: 360px;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .values-strip-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .values-strip-item {
+    border-right: none;
+    border-bottom: 1px solid rgba(250,246,240,0.07);
+  }
+
+  .process-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .process-steps::before { display: none; }
+
+  .awards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .team-img { height: 230px; }
+
+  .pull-quote {
+    font-size: 1.3rem;
+    padding: 2rem 0 2rem 1.5rem;
+  }
+
+  .pull-quote::before {
+    font-size: 4rem;
+  }
+
+  .process-steps {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .image-break {
+    height: 38vh;
+    min-height: 240px;
+  }
+
+  .image-break-text {
+    font-size: clamp(2rem, 8vw, 4rem);
+  }
+
+  .values-strip-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .values-strip-item {
+    padding: 1.25rem 1.25rem;
+    gap: 1rem;
+  }
+
+  .cert-bar-inner {
+    gap: 1.25rem;
+  }
+
+  .cert-item {
+    font-size: 0.66rem;
+  }
+
+  .timeline-item {
+    grid-template-columns: 60px 1fr;
+    gap: 1rem;
+  }
+
+  .timeline-year {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .process-steps { grid-template-columns: 1fr; }
+  .awards-grid   { grid-template-columns: 1fr; }
+  .team-grid     { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .team-img      { height: 180px; }
+  .team-name     { font-size: 0.95rem; }
+}
+
+/* ================================================================
+   CONTACT PAGE — contact.html
+================================================================ */
+@media (max-width: 992px) {
+  .contact-hero {
+    min-height: 460px;
+    height: auto;
+  }
+
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .contact-info-side { position: static; }
+
+  .faq-grid { grid-template-columns: 1fr; }
+
+  .info-strip-inner { grid-template-columns: 1fr; }
+
+  .info-strip-item {
+    border-right: none;
+    border-bottom: 1px solid rgba(250,246,240,0.08);
+  }
+
+  .info-strip-item:last-child { border-bottom: none; }
+}
+
+@media (max-width: 768px) {
+  .contact-hero-content {
+    padding: 0 1.25rem 2.5rem;
+    text-align: center;
+  }
+
+  .contact-hero-title {
+    font-size: clamp(2.8rem, 12vw, 4.5rem);
+    line-height: 1;
+  }
+
+  .contact-hero-label {
+    justify-content: center;
+    font-size: 0.62rem;
+  }
+
+  .contact-hero-breadcrumb {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-scroll-line { display: none; }
+
+  .info-strip-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.25rem;
+  }
+
+  .info-strip-text { text-align: center; }
+
+  .contact-main { padding: 4rem 0; }
+
+  .contact-form-wrap::before { display: none; }
+
+  .cf-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .cf-group { margin-bottom: 1.5rem; }
+
+  .cf-submit {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .hours-block,
+  .social-block { padding: 1.75rem 1.25rem; }
+
+  .social-links-grid { grid-template-columns: 1fr 1fr; }
+
+  .social-link-btn { justify-content: center; }
+
+  .map-container { height: 360px; }
+
+  .map-section-text {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 1.25rem;
+    width: calc(100% - 2.5rem);
+    text-align: center;
+  }
+
+  .map-directions-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .faq-section { padding: 4rem 0; }
+
+  .faq-question { font-size: 0.95rem; }
+}
+
+@media (max-width: 480px) {
+  .contact-hero-title { font-size: clamp(2rem, 10vw, 3rem); }
+
+  .info-strip-item { padding: 1.5rem 1rem; }
+
+  .social-links-grid { grid-template-columns: 1fr; }
+
+  .map-container { height: 300px; }
+}
+
+/* ================================================================
+   MENU PAGE — menu.html
+================================================================ */
+@media (max-width: 900px) {
+  .seasonal-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .seasonal-img { height: 220px; }
+  .seasonal-img::after {
+    background: linear-gradient(to bottom, transparent 40%, #2d1a0b 100%);
+  }
+
+  .chef-special {
+    grid-template-columns: 1fr;
+  }
+
+  .chef-special-img { height: 240px; }
+  .chef-special-img::after {
+    background: linear-gradient(to top, var(--brown) 0%, transparent 60%);
+  }
+
+  .chef-special-body {
+    padding: 2rem 1.5rem;
+  }
+
+  .menu-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .bake-times { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .menu-tabs { padding: 0 1rem; }
+  .menu-tabs .menu-tab { padding: 0.9rem 1rem; font-size: 0.7rem; }
+
+  .menu-grid { grid-template-columns: 1fr; }
+
+  .bake-schedule {
+    padding: 1.75rem 1.25rem;
+    margin-top: 3rem;
+  }
+
+  .bake-times {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .bake-time-clock { width: 50px; height: 50px; font-size: 1.2rem; }
+
+  .seasonal-title { font-size: 1.6rem; }
+
+  .chef-special-title { font-size: 1.4rem; }
+  .chef-special-price { font-size: 1.6rem; }
+}
+
+@media (max-width: 400px) {
+  .menu-grid  { grid-template-columns: 1fr; }
+  .bake-times { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
+   SHOP PAGE — shop.html
+================================================================ */
+@media (max-width: 900px) {
+  .shop-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .shop-sidebar { display: none; }
+
+  .shop-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hamper-banner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .hamper-banner-img { height: 220px; }
+
+  .subscription-grid { grid-template-columns: 1fr; max-width: 400px; margin-inline: auto; }
+}
+
+@media (max-width: 600px) {
+  .shop-products-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+  .shop-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .shop-sort { width: 100%; }
+
+  .promo-ticker { display: none; }
+}
+
+@media (max-width: 400px) {
+  .shop-products-grid { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
+   CART DRAWER (menu.html + shop.html)
+================================================================ */
+@media (max-width: 480px) {
+  .cart-drawer {
+    width: 100vw;
+  }
+
+  .cart-drawer-head { padding: 1.25rem 1.25rem 1rem; }
+
+  .cart-drawer-body { padding: 0.75rem 1.25rem; }
+
+  .cart-drawer-footer { padding: 1rem 1.25rem 1.75rem; }
+
+  .cart-item { gap: 0.75rem; }
+
+  .cart-item-img {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* ================================================================
+   LOGIN PAGE — login.html
+================================================================ */
+@media (max-width: 900px) {
+  .login-visual { display: none !important; }
+
+  .login-form-panel {
+    padding: 2.5rem 1.5rem;
+    flex: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .login-wrap { flex-direction: column; }
+
+  .login-visual {
+    display: block !important;
+    flex: 0 0 200px;
+    min-height: 0;
+  }
+
+  .login-visual-content { padding: 1.25rem; }
+
+  .login-logo {
+    width: 100px;
+    margin-top: 2.5rem;
+  }
+
+  .login-tagline { font-size: 1.15rem; margin-bottom: 0.75rem; }
+
+  .login-badges { gap: 0.3rem; }
+  .lbadge { font-size: 0.6rem; padding: 0.22rem 0.55rem; }
+
+  .login-form-panel { padding: 2rem 1.25rem; }
+
+  .login-title { font-size: 1.7rem; }
+
+  .lform-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .lbtn-submit { padding: 0.85rem 1rem; }
+
+  .back-link { top: 1rem; left: 1rem; }
+}
+
+@media (max-width: 400px) {
+  .role-btn .role-desc { display: none; }
+  .role-btn { padding: 0.7rem 0.4rem; }
+
+  .role-label { font-size: 0.78rem; }
+}
+
+/* ================================================================
+   CUSTOMER DASHBOARD — customer-dashboard.html
+================================================================ */
+@media (max-width: 900px) {
+  .dash-sidebar {
+    transform: translateX(-100%);
+    box-shadow: 4px 0 32px rgba(0,0,0,0.35);
+  }
+
+  .dash-sidebar.open { transform: translateX(0); }
+
+  .dash-main { margin-left: 0; }
+
+  .dash-sidebar-toggle { display: block !important; }
+
+  .dash-two-col { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .dash-section { padding: 1.5rem 1.25rem; }
+
+  .dash-section-head h2 {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+  }
+
+  .dash-stats-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .dash-stat-card {
+    padding: 1rem 1.1rem;
+    gap: 0.75rem;
+  }
+
+  .stat-num { font-size: 1.4rem; }
+
+  .quick-actions { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+
+  .quick-action-btn { padding: 0.85rem 0.5rem; font-size: 0.72rem; }
+
+  .promo-banner {
+    flex-direction: column;
+    padding: 1.25rem;
+    gap: 0.75rem;
+  }
+
+  .promo-progress { min-width: unset; width: 100%; }
+
+  .fav-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem;
+  }
+
+  .orders-filter-bar { flex-wrap: wrap; gap: 0.4rem; }
+
+  .ofbtn { padding: 0.4rem 0.85rem; font-size: 0.75rem; }
+
+  .address-grid { grid-template-columns: 1fr; }
+
+  .settings-grid { grid-template-columns: 1fr; }
+
+  .order-card-full { flex-wrap: wrap; gap: 0.75rem; }
+
+  .ocf-right { width: 100%; flex-direction: row; justify-content: space-between; }
+
+  .dash-topbar { padding: 0 1.25rem; }
+
+  .dash-topbar-greeting { font-size: 0.85rem; }
+}
+
+@media (max-width: 480px) {
+  .dash-section { padding: 1.1rem 1rem; }
+
+  .dash-stats-row { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+
+  .dash-stat-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.9rem;
+    gap: 0.4rem;
+  }
+
+  .stat-icon { width: 38px; height: 38px; font-size: 0.95rem; }
+
+  .stat-num { font-size: 1.3rem; }
+
+  .order-row { flex-wrap: wrap; gap: 0.5rem; }
+
+  .order-img-wrap { width: 40px; height: 40px; }
+
+  .order-name { font-size: 0.8rem; }
+
+  .order-status { font-size: 0.62rem; }
+
+  .fav-grid { grid-template-columns: 1fr 1fr !important; gap: 0.6rem; }
+
+  .fav-img { height: 110px; }
+
+  .address-card { flex-direction: column; gap: 0.6rem; }
+
+  .settings-card { padding: 1.1rem; }
+
+  .settings-save-btn { width: 100%; justify-content: center; }
+
+  .dash-topbar { height: 56px; padding: 0 1rem; }
+
+  .dash-card { padding: 1.1rem; }
+
+  .dash-card-head h3 { font-size: 0.95rem; }
+}
+
+/* ================================================================
+   OWNER DASHBOARD — owner-dashboard.html
+================================================================ */
+@media (max-width: 900px) {
+  .analytics-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .owner-order-actions {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .ooa-btn { text-align: center; }
+
+  .products-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .customers-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  .customers-table { min-width: 600px; }
+
+  .mini-chart { height: 80px; }
+
+  .stock-alert-bar { flex-direction: column; gap: 0.75rem; }
+
+  .trend-chip { align-self: flex-start; }
+
+  .modal-box {
+    padding: 1.5rem;
+    max-width: 92vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid { grid-template-columns: 1fr; }
+
+  .add-product-btn { width: 100%; justify-content: center; }
+
+  .pending-count-badge { margin-left: auto; }
+
+  .big-chart { height: 110px; }
+
+  .big-chart-legend { font-size: 0.58rem; }
+}
+
+/* ================================================================
+   404 PAGE — 404.html
+================================================================ */
+@media (max-width: 900px) {
+  .bread-float-wrap {
+    width: clamp(160px, 55vw, 300px);
+    height: clamp(160px, 55vw, 300px);
+    right: 50%;
+    bottom: 3rem;
+    top: auto;
+    transform: translateX(50%);
+    opacity: 0.22;
+    animation: breadFloat 7s ease-in-out infinite;
+  }
+
+  .error-content { max-width: 100%; }
+
+  .error-hero { padding-bottom: 8rem; }
+}
+
+@media (max-width: 600px) {
+  .bread-float-wrap { display: none; }
+
+  .error-code { font-size: clamp(4rem, 18vw, 7rem); }
+
+  .error-title { font-size: clamp(1.4rem, 5vw, 1.9rem); }
+
+  .error-desc { font-size: 0.95rem; }
+
+  .err-btn-primary,
+  .err-btn-outline {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .error-actions { flex-direction: column; }
+
+  .error-quick-grid { gap: 0.4rem; }
+
+  .error-watermark { font-size: clamp(12rem, 40vw, 22rem); }
+}
+
+/* ================================================================
+   TOAST NOTIFICATION (all pages)
+================================================================ */
+@media (max-width: 480px) {
+  .toast {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: unset;
+    font-size: 0.8rem;
+    padding: 0.85rem 1.1rem;
+  }
+}
+
+/* ================================================================
+   SECTION TITLES FLEX ROW (index.html featured header row)
+================================================================ */
+@media (max-width: 600px) {
+  [style*="display:flex"][style*="align-items:flex-end"][style*="justify-content:space-between"] {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+/* ================================================================
+   SAFE TOUCH TARGETS
+   All interactive elements get min 44×44 touch area on mobile
+================================================================ */
+@media (max-width: 768px) {
+  .hamburger,
+  .mobile-close,
+  .product-add,
+  .cart-close-btn,
+  .nav-cart-btn,
+  .dash-sidebar-toggle,
+  .dash-topbar-btn,
+  .carousel-prev,
+  .carousel-next,
+  .ofbtn,
+  .ooa-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .ofbtn,
+  .ooa-btn {
+    min-height: 38px;
+    min-width: unset;
+  }
+}
+
+/* ================================================================
+   SAFE SCROLLABLE CONTAINERS
+   Prevent horizontal overflow from internal content
+================================================================ */
+.products-track-wrap,
+.menu-tab-inner,
+.customers-table-wrap {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ================================================================
+   PRINT SAFETY
+================================================================ */
+@media print {
+  .navbar,
+  .mobile-menu,
+  .hamburger,
+  .page-overlay,
+  .marquee-bar,
+  .footer-socials {
+    display: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════
+   CONTACT PAGE — MOBILE RESPONSIVE FIX
+══════════════════════════════════════════ */
+
+@media (max-width: 992px) {
+
+  /* Hero */
+  .contact-hero {
+    height: auto;
+    min-height: 520px;
+    align-items: flex-end;
+  }
+
+  .contact-hero-content {
+    padding: 0 1.5rem 2.5rem;
+  }
+
+  .contact-hero-title {
+    font-size: clamp(3rem, 14vw, 5rem);
+    line-height: 0.95;
+  }
+
+  .contact-hero-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    gap: 0.7rem;
+  }
+
+  .contact-hero-breadcrumb {
+    flex-wrap: wrap;
+    font-size: 0.72rem;
+  }
+
+  .hero-scroll-line {
+    right: 1.5rem;
+    height: 55px;
+  }
+
+  /* Info Strip */
+  .info-strip-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .info-strip-item {
+    padding: 2rem 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(250,246,240,0.08);
+  }
+
+  .info-strip-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Main Layout */
+  .contact-main {
+    padding: 5rem 0;
+  }
+
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .contact-info-side {
+    position: static;
+  }
+
+  .contact-form-wrap::before {
+    display: none;
+  }
+
+  /* Form */
+  .cf-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .cf-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .cf-group input,
+  .cf-group select,
+  .cf-group textarea {
+    font-size: 16px;
+  }
+
+  .cf-submit {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+  }
+
+  /* Hours + Social */
+  .hours-block,
+  .social-block {
+    padding: 2rem 1.5rem;
+  }
+
+  .social-links-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .social-link-btn {
+    justify-content: center;
+    padding: 0.9rem;
+    font-size: 0.7rem;
+  }
+
+  .social-link-btn span {
+    display: none;
+  }
+
+  /* Map */
+  .map-container {
+    height: 380px;
+  }
+
+  .map-address-card {
+    width: calc(100% - 3rem);
+    padding: 1rem;
+  }
+
+  .map-address-name {
+    font-size: 1rem;
+  }
+
+  .map-address-text {
+    font-size: 0.7rem;
+    line-height: 1.5;
+  }
+
+  .map-section-text {
+    left: 1rem;
+    bottom: 1rem;
+  }
+
+  .map-directions-btn {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.68rem;
+  }
+
+  /* FAQ */
+  .faq-section {
+    padding: 5rem 0;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 3rem;
+  }
+
+  .faq-question {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    align-items: flex-start;
+  }
+
+  .faq-answer {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  /* Newsletter */
+  .newsletter-inner {
+    padding: 3rem 1.5rem;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+  }
+
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: center;
+  }
+
+  .footer-brand {
+    align-items: center;
+  }
+
+  .footer-socials {
+    justify-content: center;
+  }
+
+  .footer-links {
+    padding: 0;
+  }
+
+  .footer-links li {
+    list-style: none;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer-legal {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Decorative text */
+  .contact-deco-num {
+    display: none;
+  }
+}
+
+
+/* Small phones */
+@media (max-width: 480px) {
+
+  .contact-hero {
+    min-height: 470px;
+  }
+
+  .contact-hero-title {
+    font-size: 2.8rem;
+  }
+
+  .section-title {
+    font-size: 2rem !important;
+    line-height: 1.1;
+  }
+
+  .section-sub {
+    font-size: 0.92rem;
+  }
+
+  .info-strip-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1rem;
+  }
+
+  .hours-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .map-container {
+    height: 320px;
+  }
+
+  .map-pin-inner {
+    width: 50px;
+    height: 50px;
+  }
+
+  .map-pin-inner i {
+    font-size: 1rem;
+  }
+
+  .map-ripple {
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  .faq-question {
+    font-size: 0.9rem;
+  }
+}

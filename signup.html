@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — Stackly Bakery</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="login-style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Signup-specific overrides ── */
+    .signup-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 1.75rem;
+    }
+    .signup-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      flex: 1;
+    }
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--warm);
+      border: 2px solid rgba(59,32,18,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--brown);
+      opacity: 0.45;
+      transition: all 0.35s var(--ease-out);
+    }
+    .step-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--brown);
+      opacity: 0.4;
+      transition: opacity 0.35s;
+    }
+    .signup-step.active .step-circle {
+      background: var(--brown);
+      border-color: var(--brown);
+      color: var(--cream);
+      opacity: 1;
+    }
+    .signup-step.active .step-label { opacity: 1; }
+    .signup-step.done .step-circle {
+      background: var(--caramel);
+      border-color: var(--caramel);
+      color: var(--cream);
+      opacity: 1;
+    }
+    .signup-step.done .step-label { opacity: 0.75; }
+    .step-connector {
+      flex: 1;
+      height: 1.5px;
+      background: rgba(59,32,18,0.12);
+      margin-bottom: 1.4rem;
+      transition: background 0.4s;
+    }
+    .step-connector.filled { background: var(--caramel); }
+
+    /* ── Step panels ── */
+    .signup-step-panel {
+      display: none;
+      animation: stepIn 0.38s var(--ease-out) forwards;
+    }
+    .signup-step-panel.active { display: block; }
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateX(18px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── Password strength bar ── */
+    .pw-strength-wrap {
+      margin-top: 0.4rem;
+    }
+    .pw-strength-bar {
+      height: 3px;
+      border-radius: 10px;
+      background: rgba(59,32,18,0.1);
+      overflow: hidden;
+      margin-bottom: 0.3rem;
+    }
+    .pw-strength-fill {
+      height: 100%;
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.4s var(--ease-out), background 0.4s;
+    }
+    .pw-strength-text {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      color: var(--brown);
+      opacity: 0.5;
+      transition: color 0.3s;
+    }
+
+    /* ── Terms checkbox ── */
+    .terms-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 1.4rem;
+      margin-top: 0.25rem;
+    }
+    .terms-row .lcheck-box { flex-shrink: 0; margin-top: 2px; }
+    .terms-text {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--brown);
+      opacity: 0.65;
+      line-height: 1.5;
+    }
+    .terms-text a {
+      color: var(--caramel);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .terms-text a:hover { color: var(--caramel-d); }
+
+    /* ── Success state ── */
+    .signup-success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1rem 0 0.5rem;
+      animation: stepIn 0.45s var(--ease-out) forwards;
+    }
+    .signup-success.visible { display: flex; }
+    .success-icon {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--caramel), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: var(--cream);
+      margin-bottom: 1.25rem;
+      box-shadow: 0 8px 28px rgba(200,135,74,0.35);
+      animation: successPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes successPop {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    .success-title {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .success-sub {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--caramel-d);
+      opacity: 0.75;
+      margin-bottom: 1.75rem;
+    }
+    .success-redirect-note {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--brown);
+      opacity: 0.4;
+      margin-bottom: 1.5rem;
+    }
+    .success-countdown {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      background: var(--warm);
+      border-radius: 50%;
+      font-weight: 500;
+      color: var(--caramel);
+      opacity: 1 !important;
+    }
+
+    /* ── Back / Next buttons ── */
+    .step-nav {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .step-nav .lbtn-submit {
+      margin-bottom: 0;
+    }
+    .lbtn-back {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      border-radius: 9px;
+      background: var(--warm);
+      border: 1.5px solid rgba(59,32,18,0.1);
+      color: var(--brown);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+    .lbtn-back:hover {
+      background: rgba(59,32,18,0.08);
+      border-color: var(--caramel);
+    }
+
+    /* ── Visual panel override for signup ── */
+    .login-visual .signup-visual-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(200,135,74,0.18);
+      border: 1px solid rgba(200,135,74,0.35);
+      color: var(--gold-l);
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.45rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+      backdrop-filter: blur(8px);
+    }
+
+    /* ── Phone field ── */
+    .phone-prefix {
+      position: absolute;
+      left: 2.6rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--brown);
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .lfield-input-wrap.has-prefix input {
+      padding-left: 4.2rem;
+    }
+
+    /* ── Select field ── */
+    .lfield-input-wrap select {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 2.6rem;
+      background: var(--warm);
+      border: 1.5px solid transparent;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--dark);
+      transition: border-color 0.25s, box-shadow 0.25s;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+    .lfield-input-wrap select:focus {
+      border-color: var(--caramel);
+      box-shadow: 0 0 0 3px rgba(200,135,74,0.12);
+    }
+    .select-arrow {
+      position: absolute;
+      right: 1rem;
+      color: var(--caramel);
+      font-size: 0.75rem;
+      pointer-events: none;
+    }
+
+    /* ── Avatar picker ── */
+    .avatar-picker {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+    .avatar-opt {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--warm);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .avatar-opt:hover { transform: scale(1.1); }
+    .avatar-opt.selected {
+      border-color: var(--caramel);
+      box-shadow: 0 0 0 3px rgba(200,135,74,0.18);
+    }
+    .avatar-label {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--brown);
+      opacity: 0.55;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+  </style>
+</head>
+<body class="login-body">
+
+  <div class="page-overlay" id="page-overlay"></div>
+
+  <a href="login.html" class="back-link" id="back-link">
+    <i class="fas fa-arrow-left"></i>
+    <span>Back to Sign In</span>
+  </a>
+
+  <div class="login-wrap" id="login-wrap">
+
+    <!-- ── Left panel ── -->
+    <div class="login-visual">
+      <div class="login-visual-overlay"></div>
+      <img
+        src="https://wsrv.nl/?url=https://images.unsplash.com/photo-1517433367423-c7e5b0f35086&w=900&output=webp&q=72&fit=cover"
+        alt="Artisan pastries"
+        class="login-bg-img"
+      />
+      <div class="login-visual-content">
+        <a href="index.html"><img
+          src="https://wsrv.nl/?url=https://snabsolutions.in/wp-content/uploads/2026/02/stackly-snab-solutions.png&w=300&output=webp&q=90"
+          alt="Stackly Bakery"
+          class="login-logo"
+        /></a>
+        <div>
+          <span class="signup-visual-badge">
+            <i class="fas fa-sparkles"></i>
+            New Member Benefits
+          </span>
+          <p class="login-tagline">Join the Stackly<br /><em>family today</em></p>
+          <div class="login-badges">
+            <span class="lbadge">🎁 Free loaf on first order</span>
+            <span class="lbadge">⭐ Loyalty rewards</span>
+            <span class="lbadge">🚴 Priority delivery</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Right panel ── -->
+    <div class="login-form-panel" id="login-form-panel">
+      <div class="login-form-inner" id="form-inner">
+
+        <!-- Header -->
+        <div class="login-header" id="form-header">
+          <h1 class="login-title" id="form-title">Create Account</h1>
+          <p class="login-sub" id="form-sub">Join Stackly — it only takes a moment</p>
+        </div>
+
+        <!-- Role selector -->
+        <div class="role-selector" id="role-selector">
+          <button class="role-btn active" data-role="customer" id="btn-customer">
+            <span class="role-icon"><i class="fas fa-user"></i></span>
+            <span class="role-label">Customer</span>
+            <span class="role-desc">Order & track your bread</span>
+          </button>
+          <button class="role-btn" data-role="owner" id="btn-owner">
+            <span class="role-icon"><i class="fas fa-store"></i></span>
+            <span class="role-label">Owner</span>
+            <span class="role-desc">Manage your bakery</span>
+          </button>
+          <div class="role-slider" id="role-slider"></div>
+        </div>
+
+        <!-- Step indicators -->
+        <div class="signup-steps" id="signup-steps">
+          <div class="signup-step active" id="step-ind-1">
+            <div class="step-circle">1</div>
+            <span class="step-label">Account</span>
+          </div>
+          <div class="step-connector" id="conn-1"></div>
+          <div class="signup-step" id="step-ind-2">
+            <div class="step-circle">2</div>
+            <span class="step-label">Profile</span>
+          </div>
+          <div class="step-connector" id="conn-2"></div>
+          <div class="signup-step" id="step-ind-3">
+            <div class="step-circle">3</div>
+            <span class="step-label">Confirm</span>
+          </div>
+        </div>
+
+        <!-- ══ STEP 1 — Account details ══ -->
+        <div class="signup-step-panel active" id="panel-step-1">
+          <div class="lfield-group">
+            <div class="lfield">
+              <label for="sf-name">Full Name</label>
+              <div class="lfield-input-wrap">
+                <i class="fas fa-user lfield-icon"></i>
+                <input type="text" id="sf-name" placeholder="e.g. Sarah Mitchell" autocomplete="name" />
+              </div>
+            </div>
+            <div class="lfield">
+              <label for="sf-email">Email Address</label>
+              <div class="lfield-input-wrap">
+                <i class="fas fa-envelope lfield-icon"></i>
+                <input type="email" id="sf-email" placeholder="you@example.com" autocomplete="email" />
+              </div>
+            </div>
+            <div class="lfield">
+              <label for="sf-password">Password</label>
+              <div class="lfield-input-wrap">
+                <i class="fas fa-lock lfield-icon"></i>
+                <input type="password" id="sf-password" placeholder="Create a strong password" autocomplete="new-password" />
+                <button type="button" class="pw-toggle" id="pw-toggle-1" aria-label="Toggle password">
+                  <i class="fas fa-eye" id="pw-icon-1"></i>
+                </button>
+              </div>
+              <div class="pw-strength-wrap">
+                <div class="pw-strength-bar">
+                  <div class="pw-strength-fill" id="pw-strength-fill"></div>
+                </div>
+                <span class="pw-strength-text" id="pw-strength-text">Enter a password</span>
+              </div>
+            </div>
+            <div class="lfield">
+              <label for="sf-confirm">Confirm Password</label>
+              <div class="lfield-input-wrap">
+                <i class="fas fa-lock lfield-icon"></i>
+                <input type="password" id="sf-confirm" placeholder="Repeat your password" autocomplete="new-password" />
+                <button type="button" class="pw-toggle" id="pw-toggle-2" aria-label="Toggle confirm password">
+                  <i class="fas fa-eye" id="pw-icon-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button class="lbtn-submit" id="btn-step1-next" style="margin-bottom:1.25rem;">
+            <span class="lbtn-text">Continue</span>
+            <span class="lbtn-arrow"><i class="fas fa-arrow-right"></i></span>
+          </button>
+
+          <p class="lform-note">
+            Already have an account?
+            <a href="login.html" class="lform-note-link">Sign in here</a>
+          </p>
+        </div>
+
+        <!-- ══ STEP 2 — Profile ══ -->
+        <div class="signup-step-panel" id="panel-step-2">
+          <div class="lfield-group">
+            <div class="lfield">
+              <span class="avatar-label">Choose an avatar</span>
+              <div class="avatar-picker" id="avatar-picker">
+                <button type="button" class="avatar-opt selected" data-avatar="🧁">🧁</button>
+                <button type="button" class="avatar-opt" data-avatar="🥐">🥐</button>
+                <button type="button" class="avatar-opt" data-avatar="🍞">🍞</button>
+                <button type="button" class="avatar-opt" data-avatar="🎂">🎂</button>
+                <button type="button" class="avatar-opt" data-avatar="🥧">🥧</button>
+                <button type="button" class="avatar-opt" data-avatar="☕">☕</button>
+              </div>
+            </div>
+            <div class="lfield">
+              <label for="sf-phone">Phone Number <span style="opacity:0.4;font-size:0.85em">(optional)</span></label>
+              <div class="lfield-input-wrap has-prefix">
+                <i class="fas fa-phone lfield-icon"></i>
+                <span class="phone-prefix">+44</span>
+                <input type="tel" id="sf-phone" placeholder="7700 900000" autocomplete="tel" />
+              </div>
+            </div>
+            <div class="lfield">
+              <label for="sf-dob">Date of Birth <span style="opacity:0.4;font-size:0.85em">(optional)</span></label>
+              <div class="lfield-input-wrap">
+                <i class="fas fa-birthday-cake lfield-icon"></i>
+                <input type="date" id="sf-dob" />
+              </div>
+            </div>
+            <div class="lfield">
+              <label for="sf-how">How did you hear about us?</label>
+              <div class="lfield-input-wrap" style="position:relative">
+                <i class="fas fa-bullhorn lfield-icon"></i>
+                <select id="sf-how">
+                  <option value="" disabled selected>Select an option…</option>
+                  <option>Friend or family</option>
+                  <option>Social media</option>
+                  <option>Google search</option>
+                  <option>Local flyer / poster</option>
+                  <option>In-store visit</option>
+                  <option>Other</option>
+                </select>
+                <i class="fas fa-chevron-down select-arrow"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button class="lbtn-back" id="btn-step2-back" title="Back">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="lbtn-submit" id="btn-step2-next" style="flex:1;margin-bottom:0">
+              <span class="lbtn-text">Continue</span>
+              <span class="lbtn-arrow"><i class="fas fa-arrow-right"></i></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ══ STEP 3 — Confirm & terms ══ -->
+        <div class="signup-step-panel" id="panel-step-3">
+
+          <!-- Summary card -->
+          <div style="background:var(--warm);border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;display:flex;gap:0.85rem;align-items:center;">
+            <div id="summary-avatar" style="font-size:2rem;line-height:1;flex-shrink:0;">🧁</div>
+            <div>
+              <div id="summary-name" style="font-family:var(--font-display);font-size:1.05rem;color:var(--dark);font-weight:600;"></div>
+              <div id="summary-email" style="font-family:var(--font-ui);font-size:0.78rem;color:var(--caramel-d);opacity:0.8;"></div>
+              <div id="summary-role" style="font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--brown);opacity:0.45;margin-top:2px;"></div>
+            </div>
+          </div>
+
+          <div class="lfield-group" style="margin-bottom:1rem;">
+            <div class="lfield">
+              <div class="settings-toggle-row" style="display:flex;align-items:center;justify-content:space-between;padding:0.1rem 0;">
+                <span style="font-family:var(--font-body);font-size:0.95rem;color:var(--brown);">Order updates & receipts</span>
+                <label class="toggle-switch" style="position:relative;display:inline-block;width:42px;height:22px;">
+                  <input type="checkbox" id="notif-orders" checked />
+                  <span style="position:absolute;cursor:pointer;inset:0;background:rgba(59,32,18,0.15);border-radius:34px;transition:0.3s;"></span>
+                </label>
+              </div>
+            </div>
+            <div class="lfield">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:0.1rem 0;">
+                <span style="font-family:var(--font-body);font-size:0.95rem;color:var(--brown);">Newsletter & weekly specials</span>
+                <label class="toggle-switch" style="position:relative;display:inline-block;width:42px;height:22px;">
+                  <input type="checkbox" id="notif-news" checked />
+                  <span style="position:absolute;cursor:pointer;inset:0;background:rgba(59,32,18,0.15);border-radius:34px;transition:0.3s;"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <style>
+            .toggle-switch input:checked + span { background: var(--caramel) !important; }
+          </style>
+
+          <label class="lcheck terms-row" id="terms-label">
+            <input type="checkbox" id="terms-check" />
+            <span class="lcheck-box" id="terms-box"></span>
+            <span class="terms-text">
+              I agree to Stackly's
+              <a href="#">Terms of Service</a> and
+              <a href="#">Privacy Policy</a>.
+              I confirm I am 16 years or older.
+            </span>
+          </label>
+
+          <div class="step-nav">
+            <button class="lbtn-back" id="btn-step3-back" title="Back">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="lbtn-submit" id="btn-create-account" style="flex:1;margin-bottom:0">
+              <span class="lbtn-text" id="create-btn-text">Create Account</span>
+              <span class="lbtn-spinner" id="create-spinner"><i class="fas fa-circle-notch fa-spin"></i></span>
+              <span class="lbtn-arrow"><i class="fas fa-check"></i></span>
+            </button>
+          </div>
+
+          <p class="lform-note" style="margin-top:0.75rem;">
+            Already have an account?
+            <a href="login.html" class="lform-note-link">Sign in here</a>
+          </p>
+        </div>
+
+        <!-- ══ SUCCESS ══ -->
+        <div class="signup-success" id="signup-success">
+          <div class="success-icon"><i class="fas fa-check"></i></div>
+          <h2 class="success-title">You're all set!</h2>
+          <p class="success-sub">Welcome to Stackly, <strong id="success-name"></strong>.<br />Your account has been created.</p>
+          <p class="success-redirect-note">
+            Redirecting to sign in in <span class="success-countdown" id="countdown">3</span>
+          </p>
+          <a href="login.html" class="lbtn-submit" id="goto-login" style="width:100%;display:flex;text-align:center;justify-content:center;margin-bottom:0;text-decoration:none;">
+            <span class="lbtn-text">Go to Sign In</span>
+            <span class="lbtn-arrow"><i class="fas fa-arrow-right"></i></span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="mobile-responsive.css" />
+  <script src="main.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* ── Refs ── */
+    var btnCustomer  = document.getElementById('btn-customer');
+    var btnOwner     = document.getElementById('btn-owner');
+    var roleSelector = document.getElementById('role-selector');
+    var overlay      = document.getElementById('page-overlay');
+    var backLink     = document.getElementById('back-link');
+
+    var currentRole   = 'customer';
+    var currentStep   = 1;
+    var selectedAvatar = '🧁';
+
+    /* ── Role switching ── */
+    function setRole(role) {
+      currentRole = role;
+      if (role === 'customer') {
+        btnCustomer.classList.add('active');
+        btnOwner.classList.remove('active');
+        roleSelector.classList.remove('owner-active');
+      } else {
+        btnOwner.classList.add('active');
+        btnCustomer.classList.remove('active');
+        roleSelector.classList.add('owner-active');
+      }
+    }
+    btnCustomer.addEventListener('click', function () { setRole('customer'); });
+    btnOwner.addEventListener('click',    function () { setRole('owner'); });
+
+    /* ── Step navigation ── */
+    function goToStep(n) {
+      // hide all panels
+      document.querySelectorAll('.signup-step-panel').forEach(function (p) {
+        p.classList.remove('active');
+      });
+      document.getElementById('panel-step-' + n).classList.add('active');
+
+      // update step indicators
+      [1, 2, 3].forEach(function (i) {
+        var ind = document.getElementById('step-ind-' + i);
+        ind.classList.remove('active', 'done');
+        if (i < n)       ind.classList.add('done');
+        else if (i === n) ind.classList.add('active');
+      });
+
+      // connectors
+      document.getElementById('conn-1').classList.toggle('filled', n > 1);
+      document.getElementById('conn-2').classList.toggle('filled', n > 2);
+
+      currentStep = n;
+    }
+
+    /* ── Password toggle helpers ── */
+    function bindPwToggle(toggleId, iconId, fieldId) {
+      var btn   = document.getElementById(toggleId);
+      var icon  = document.getElementById(iconId);
+      var field = document.getElementById(fieldId);
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var isText = field.type === 'text';
+        field.type = isText ? 'password' : 'text';
+        icon.className = isText ? 'fas fa-eye' : 'fas fa-eye-slash';
+      });
+    }
+    bindPwToggle('pw-toggle-1', 'pw-icon-1', 'sf-password');
+    bindPwToggle('pw-toggle-2', 'pw-icon-2', 'sf-confirm');
+
+    /* ── Password strength ── */
+    var pwField     = document.getElementById('sf-password');
+    var strengthBar = document.getElementById('pw-strength-fill');
+    var strengthTxt = document.getElementById('pw-strength-text');
+
+    function calcStrength(pw) {
+      var score = 0;
+      if (pw.length >= 8)  score++;
+      if (pw.length >= 12) score++;
+      if (/[A-Z]/.test(pw)) score++;
+      if (/[0-9]/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+      return score;
+    }
+
+    pwField.addEventListener('input', function () {
+      var pw    = pwField.value;
+      var score = calcStrength(pw);
+      var widths = ['0%', '22%', '44%', '66%', '85%', '100%'];
+      var colors = ['#e57373','#e57373','#ffb74d','#ffb74d','#aed581','#66bb6a'];
+      var labels = ['Too short','Weak','Fair','Moderate','Strong','Very strong'];
+      strengthBar.style.width      = pw.length ? widths[score] : '0%';
+      strengthBar.style.background = colors[score];
+      strengthTxt.textContent      = pw.length ? labels[score] : 'Enter a password';
+      strengthTxt.style.color      = pw.length ? colors[score] : '';
+    });
+
+    /* ── Avatar picker ── */
+    document.querySelectorAll('.avatar-opt').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.avatar-opt').forEach(function (b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        selectedAvatar = btn.dataset.avatar;
+      });
+    });
+
+    /* ── Shake ── */
+    function shakeForm() {
+      var inner = document.querySelector('.login-form-inner');
+      if (!inner) return;
+      inner.style.animation = 'none';
+      inner.offsetHeight;
+      inner.style.animation = 'formShake 0.4s ease';
+    }
+    var shakeStyle = document.createElement('style');
+    shakeStyle.textContent = '@keyframes formShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}';
+    document.head.appendChild(shakeStyle);
+
+    /* ── Step 1 → 2 ── */
+    document.getElementById('btn-step1-next').addEventListener('click', function () {
+      var name    = document.getElementById('sf-name').value.trim();
+      var email   = document.getElementById('sf-email').value.trim();
+      var pw      = document.getElementById('sf-password').value;
+      var confirm = document.getElementById('sf-confirm').value;
+
+      if (!name || !email || !pw || !confirm) { shakeForm(); return; }
+      if (pw !== confirm) {
+        document.getElementById('sf-confirm').style.borderColor = '#e57373';
+        setTimeout(function () { document.getElementById('sf-confirm').style.borderColor = ''; }, 1800);
+        shakeForm(); return;
+      }
+      goToStep(2);
+    });
+
+    /* ── Step 2 → 3 ── */
+    document.getElementById('btn-step2-next').addEventListener('click', function () {
+      // populate summary
+      document.getElementById('summary-name').textContent  = document.getElementById('sf-name').value.trim();
+      document.getElementById('summary-email').textContent = document.getElementById('sf-email').value.trim();
+      document.getElementById('summary-avatar').textContent = selectedAvatar;
+      document.getElementById('summary-role').textContent  = currentRole === 'owner' ? 'Bakery Owner' : 'Customer';
+      goToStep(3);
+    });
+
+    /* ── Back buttons ── */
+    document.getElementById('btn-step2-back').addEventListener('click', function () { goToStep(1); });
+    document.getElementById('btn-step3-back').addEventListener('click', function () { goToStep(2); });
+
+    /* ── Create Account ── */
+    document.getElementById('btn-create-account').addEventListener('click', function () {
+      var termsCheck = document.getElementById('terms-check');
+      if (!termsCheck.checked) {
+        document.getElementById('terms-box').style.borderColor = '#e57373';
+        setTimeout(function () { document.getElementById('terms-box').style.borderColor = ''; }, 1800);
+        shakeForm(); return;
+      }
+
+      // store in session
+      sessionStorage.setItem('sb_user_name',  document.getElementById('sf-name').value.trim());
+      sessionStorage.setItem('sb_user_email', document.getElementById('sf-email').value.trim());
+      sessionStorage.setItem('sb_user_role',  currentRole);
+
+      // loading state
+      var btn = document.getElementById('btn-create-account');
+      btn.classList.add('loading');
+      document.getElementById('create-btn-text').textContent = 'Creating…';
+
+      setTimeout(function () {
+        // hide form sections, show success
+        document.getElementById('role-selector').style.display = 'none';
+        document.getElementById('signup-steps').style.display  = 'none';
+        document.querySelectorAll('.signup-step-panel').forEach(function (p) { p.classList.remove('active'); });
+        document.getElementById('form-header').style.display   = 'none';
+
+        var successEl = document.getElementById('signup-success');
+        successEl.classList.add('visible');
+        document.getElementById('success-name').textContent = document.getElementById('sf-name').value.trim();
+
+        // countdown & redirect
+        var count = 3;
+        var cd    = document.getElementById('countdown');
+        cd.textContent = count;
+        var timer = setInterval(function () {
+          count--;
+          cd.textContent = count;
+          if (count <= 0) {
+            clearInterval(timer);
+            if (overlay) {
+              overlay.classList.add('active');
+              setTimeout(function () { window.location.href = 'login.html'; }, 550);
+            } else {
+              window.location.href = 'login.html';
+            }
+          }
+        }, 1000);
+      }, 1100);
+    });
+
+    /* ── Back link ── */
+    if (backLink && overlay) {
+      backLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        overlay.classList.add('active');
+        setTimeout(function () { window.location.href = backLink.href; }, 550);
+      });
+    }
+
+    /* ── Label focus highlight ── */
+    document.querySelectorAll('.lfield').forEach(function (field) {
+      var inp = field.querySelector('input, select');
+      var lbl = field.querySelector('label');
+      if (!inp || !lbl) return;
+      inp.addEventListener('focus', function () { lbl.style.color = 'var(--caramel)'; lbl.style.opacity = '1'; });
+      inp.addEventListener('blur',  function () { lbl.style.color = ''; lbl.style.opacity = ''; });
+    });
+
+  });
+  </script>
+</body>
+</html>
